@@ -17,6 +17,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "ng-mat-select-infinite-scroll": [
+        "dist/ng-mat-select-infinite-scroll"
+      ],
+      "ng-mat-select-infinite-scroll/*": [
+        "dist/ng-mat-select-infinite-scroll/*"
+      ]
+    }
   }
 }
