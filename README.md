@@ -22,7 +22,7 @@ Adds missing infinite scroll functionality for the [angular material select comp
 Import `MatSelectInfiniteScrollModule` inside the app.module.ts
 ```typescript
 import { MatFormFieldModule, MatSelectModule } from '@angular/material';
-import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import {MatSelectInfiniteScrollModule} from 'ng-mat-select-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -31,7 +31,6 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    FormsModule,
     MatFormFieldModule,
     MatSelectModule,
     MatSelectInfiniteScrollModule
