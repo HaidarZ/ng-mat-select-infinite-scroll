@@ -6,5 +6,5 @@ import {MatSelectInfiniteScrollDirective} from './directives/mat-select-infinite
   imports: [],
   exports: [MatSelectInfiniteScrollDirective]
 })
-export class NgMatSelectInfiniteScrollModule {
+export class MatSelectInfiniteScrollModule {
 }

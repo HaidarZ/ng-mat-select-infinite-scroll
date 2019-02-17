@@ -19,7 +19,7 @@ Adds missing infinite scroll functionality for the [angular material select comp
 
 ### Usage
 
-Import `NgMatSelectInfiniteScrollModule` inside the app.module.ts
+Import `MatSelectInfiniteScrollModule` inside the app.module.ts
 ```typescript
 import { MatFormFieldModule, MatSelectModule } from '@angular/material';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
@@ -34,7 +34,7 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     FormsModule,
     MatFormFieldModule,
     MatSelectModule,
-    NgMatSelectInfiniteScrollModule
+    MatSelectInfiniteScrollModule
   ],
   providers: [],
   bootstrap: [AppComponent]
@@ -61,7 +61,7 @@ Then place the msInfiniteScroll directive on the `mat-select` component
 * `rxjs`: `^6.0.0`
 
 ### Contributions
-Contributions are welcome, please open an issue and preferrably file a pull request.
+Contributions are welcome, feel free to open a Pull-Request or open a new issue.
 
 ## Development
 

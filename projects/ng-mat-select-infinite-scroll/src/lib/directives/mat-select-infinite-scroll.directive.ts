@@ -83,5 +83,4 @@ export class MatSelectInfiniteScrollDirective implements OnInit, OnDestroy, Afte
     return parseFloat(getComputedStyle(this.matSelect.panel.nativeElement).fontSize) * SELECT_ITEM_HEIGHT_EM;
   }
 
-
 }
