@@ -1,5 +1,5 @@
 import {AfterViewInit, Directive, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {MatSelect, SELECT_ITEM_HEIGHT_EM, SELECT_PANEL_MAX_HEIGHT} from '@angular/material';
+import {MatSelect, SELECT_ITEM_HEIGHT_EM} from '@angular/material';
 import {auditTime, takeUntil, tap} from 'rxjs/operators';
 import {fromEvent, Subject, Subscription} from 'rxjs';
 
@@ -53,10 +53,9 @@ export class MatSelectInfiniteScrollDirective implements OnInit, OnDestroy, Afte
   }
 
   registerScrollListener() {
-    const panel = this.matSelect.panel.nativeElement;
-    this.scrollSubscription = fromEvent(panel, 'scroll').pipe(
+    this.scrollSubscription = fromEvent(this.panel, 'scroll').pipe(
       takeUntil(this.onDestroy),
-      auditTime(300),
+      // auditTime(300),
       tap((event) => {
         this.handleScrollEvent(event);
       })
@@ -72,7 +71,7 @@ export class MatSelectInfiniteScrollDirective implements OnInit, OnDestroy, Afte
     const infiniteScrollDistance = singleOptionHeight * countOfRenderedOptions;
     const threshold = this.thrPc !== 0 ? (infiniteScrollDistance * this.thrPc) : this.thrPx;
 
-    const scrolledDistance = SELECT_PANEL_MAX_HEIGHT + event.target.scrollTop;
+    const scrolledDistance = this.panel.clientHeight + event.target.scrollTop;
 
     if ((scrolledDistance + threshold) >= infiniteScrollDistance) {
       this.infiniteScroll.emit();
@@ -81,6 +80,10 @@ export class MatSelectInfiniteScrollDirective implements OnInit, OnDestroy, Afte
 
   getSelectItemHeightPx(): number {
     return parseFloat(getComputedStyle(this.matSelect.panel.nativeElement).fontSize) * SELECT_ITEM_HEIGHT_EM;
+  }
+
+  get panel() {
+    return this.matSelect.panel.nativeElement;
   }
 
 }
