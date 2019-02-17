@@ -10,7 +10,7 @@ export class InfiniteScrollDirective implements OnInit, OnDestroy, AfterViewInit
 
   @Input() threshold = '15%';
   @Input() complete: boolean;
-  @Output() infiniteScroll = new EventEmitter<null>();
+  @Output() infiniteScroll = new EventEmitter<void>();
 
   private thrPx = 0;
   private thrPc = 0;
