@@ -1,7 +1,7 @@
 
-# Angular Material Infinite Scroll  
+# Angular Material Select Infinite Scroll  
   
-Adds missing infinite scroll functionality for the angular material select component  
+Adds missing infinite scroll functionality for the [angular material select component](https://material.angular.io/components/select)
   
   
 ## Inputs  

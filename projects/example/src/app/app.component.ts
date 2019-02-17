@@ -8,7 +8,7 @@ import {scan} from 'rxjs/operators';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'Angular Material Infinite Scroll';
+  title = 'Angular Material Select Infinite Scroll';
   total = 100;
   data = Array.from({length: this.total}).map((_, i) => `Option ${i}`);
   limit = 10;

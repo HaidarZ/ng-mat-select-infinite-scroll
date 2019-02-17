@@ -6,7 +6,7 @@ import {fromEvent, Subject, Subscription} from 'rxjs';
 @Directive({
   selector: '[msInfiniteScroll]'
 })
-export class InfiniteScrollDirective implements OnInit, OnDestroy, AfterViewInit {
+export class MatSelectInfiniteScrollDirective implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() threshold = '15%';
   @Input() complete: boolean;
