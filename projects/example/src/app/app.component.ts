@@ -34,8 +34,4 @@ export class AppComponent implements OnInit {
     this.offset += this.limit;
   }
 
-  reset() {
-    this.offset = 0;
-    this.getNextBatch();
-  }
 }
