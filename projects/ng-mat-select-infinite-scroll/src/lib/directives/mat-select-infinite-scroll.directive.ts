@@ -58,12 +58,12 @@ export class MatSelectInfiniteScrollDirective implements OnInit, OnDestroy, Afte
       takeUntil(this.onDestroy),
       auditTime(300),
       tap((event) => {
-        this.loadAllOnScroll(event);
+        this.handleScrollEvent(event);
       })
     ).subscribe();
   }
 
-  loadAllOnScroll(event) {
+  handleScrollEvent(event) {
     if (this.complete) {
       return;
     }
