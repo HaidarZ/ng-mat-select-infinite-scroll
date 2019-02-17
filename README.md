@@ -60,7 +60,7 @@ Then place the msInfiniteScroll directive on the `mat-select` component
 * `rxjs`: `^6.0.0`
 
 ### Contributions
-Contributions are welcome, feel free to open a Pull-Request or open a new issue.
+Contributions are welcomed, feel free to open a Pull-Request or open a new issue.
 
 ## Development
 
