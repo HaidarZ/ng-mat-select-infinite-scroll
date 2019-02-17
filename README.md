@@ -15,3 +15,11 @@ Adds missing infinite scroll functionality for the [angular material select comp
 | Property         | Description                                                                             | Type                                                                                                                                                                                                                                                                                                                                          |
 | ---------------- | ----------------------------------------------------------------------------------------| ------------ 
 | `infinitScroll`  | Emitted when the scroller inside the `mat-select` reaches the required distance         | `EventEmitter<void>`
+
+
+### Compatibility
+
+* `@angular/core`: `^7.0.0`,
+* `@angular/cdk`: `^7.0.0`,
+* `@angular/material`: `^7.0.0`,
+* `rxjs`: `^6.0.0`
