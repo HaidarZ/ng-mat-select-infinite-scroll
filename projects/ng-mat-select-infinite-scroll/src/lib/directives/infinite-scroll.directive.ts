@@ -64,19 +64,22 @@ export class InfiniteScrollDirective implements OnInit, OnDestroy, AfterViewInit
   }
 
   loadAllOnScroll(event) {
-    const singleOptionHeight = this.getItemHeightPx();
+    if (this.complete) {
+      return;
+    }
+    const singleOptionHeight = this.getSelectItemHeightPx();
     const countOfRenderedOptions = this.matSelect.options.length;
     const infiniteScrollDistance = singleOptionHeight * countOfRenderedOptions;
     const threshold = this.thrPc !== 0 ? (infiniteScrollDistance * this.thrPc) : this.thrPx;
 
     const scrolledDistance = SELECT_PANEL_MAX_HEIGHT + event.target.scrollTop;
 
-    if ((scrolledDistance + threshold) >= infiniteScrollDistance && !this.complete) {
+    if ((scrolledDistance + threshold) >= infiniteScrollDistance) {
       this.infiniteScroll.emit();
     }
   }
 
-  getItemHeightPx(): number {
+  getSelectItemHeightPx(): number {
     return parseFloat(getComputedStyle(this.matSelect.panel.nativeElement).fontSize) * SELECT_ITEM_HEIGHT_EM;
   }
 
