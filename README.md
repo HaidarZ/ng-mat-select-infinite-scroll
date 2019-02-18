@@ -16,6 +16,11 @@ Adds missing infinite scroll functionality for the [angular material select comp
 | ---------------- | ----------------------------------------------------------------------------------------| ------------ 
 | `infinitScroll`  | Emitted when the scroller inside the `mat-select` reaches the required distance         | `EventEmitter<void>`
 
+### Installation
+
+```
+npm i ng-mat-select-infinite-scroll
+```
 
 ### Usage
 
