@@ -1,6 +1,6 @@
 {
   "name": "ng-mat-select-infinite-scroll",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Adds missing infinite scroll functionality for the angular material select component",
   "author": "Haidar Zeineddine",
   "repository": {
