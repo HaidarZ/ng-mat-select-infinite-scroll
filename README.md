@@ -23,6 +23,7 @@ npm i ng-mat-select-infinite-scroll
 ```
 
 ### Usage
+[StackBlitz working example](https://stackblitz.com/edit/ng-mat-select-infinite-scroll)
 
 Import `MatSelectInfiniteScrollModule` inside the app.module.ts
 ```typescript
