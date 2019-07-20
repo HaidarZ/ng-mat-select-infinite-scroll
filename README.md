@@ -60,17 +60,13 @@ Then place the msInfiniteScroll directive on the `mat-select` component
 
 ### Compatibility
 
-* `@angular/core`: `^7.0.0`,
-* `@angular/cdk`: `^7.0.0`,
-* `@angular/material`: `^7.0.0`,
+* `@angular/core`: `>=6.0.0 <9.0.0`,
+* `@angular/cdk`: `>=6.0.0 <9.0.0`,
+* `@angular/material`: `>=6.0.0 <9.0.0`,
 * `rxjs`: `^6.0.0`
 
 ### Contributions
 Contributions are welcomed, feel free to open a Pull-Request or open a new issue.
-
-## Development
-
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.1.
 
 ### Development server
 
