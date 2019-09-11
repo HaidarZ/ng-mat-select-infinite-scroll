@@ -1,6 +1,6 @@
 import {AfterViewInit, Directive, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {MatSelect, SELECT_ITEM_HEIGHT_EM} from '@angular/material';
-import {auditTime, takeUntil, tap} from 'rxjs/operators';
+import {takeUntil, tap, debounceTime} from 'rxjs/operators';
 import {fromEvent, Subject, Subscription} from 'rxjs';
 
 @Directive({
@@ -9,6 +9,7 @@ import {fromEvent, Subject, Subscription} from 'rxjs';
 export class MatSelectInfiniteScrollDirective implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() threshold = '15%';
+  @Input() debounceTime = 500;
   @Input() complete: boolean;
   @Output() infiniteScroll = new EventEmitter<void>();
 
@@ -55,7 +56,7 @@ export class MatSelectInfiniteScrollDirective implements OnInit, OnDestroy, Afte
   registerScrollListener() {
     this.scrollSubscription = fromEvent(this.panel, 'scroll').pipe(
       takeUntil(this.onDestroy),
-      // auditTime(300),
+      debounceTime(this.debounceTime),
       tap((event) => {
         this.handleScrollEvent(event);
       })
