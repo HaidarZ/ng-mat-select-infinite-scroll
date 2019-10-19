@@ -29,9 +29,11 @@ export class AppComponent implements OnInit {
   }
 
   getNextBatch() {
-    const result = this.data.slice(this.offset, this.offset + this.limit);
-    this.options.next(result);
-    this.offset += this.limit;
+    setTimeout(() => {
+      const result = this.data.slice(this.offset, this.offset + this.limit);
+      this.options.next(result);
+      this.offset += this.limit;
+    }, 150);
   }
 
 }

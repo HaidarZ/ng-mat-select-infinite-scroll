@@ -1,7 +1,7 @@
-import {AfterViewInit, Directive, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Directive, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output} from '@angular/core';
 import {MatSelect, SELECT_ITEM_HEIGHT_EM} from '@angular/material';
-import {takeUntil, tap, debounceTime} from 'rxjs/operators';
-import {fromEvent, Subject, Subscription} from 'rxjs';
+import {debounceTime, takeUntil, tap} from 'rxjs/operators';
+import {fromEvent, Subject} from 'rxjs';
 
 @Directive({
   selector: '[msInfiniteScroll]'
@@ -9,17 +9,18 @@ import {fromEvent, Subject, Subscription} from 'rxjs';
 export class MatSelectInfiniteScrollDirective implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() threshold = '15%';
-  @Input() debounceTime = 500;
+  @Input() debounceTime = 150;
   @Input() complete: boolean;
   @Output() infiniteScroll = new EventEmitter<void>();
 
+  private panel: Element;
   private thrPx = 0;
   private thrPc = 0;
+  private singleOptionHeight = SELECT_ITEM_HEIGHT_EM;
 
-  private onDestroy = new Subject<void>();
-  private scrollSubscription: Subscription;
+  private destroyed$ = new Subject<boolean>();
 
-  constructor(private element: ElementRef, private matSelect: MatSelect) {
+  constructor(private matSelect: MatSelect, private ngZone: NgZone) {
   }
 
   ngOnInit() {
@@ -27,19 +28,20 @@ export class MatSelectInfiniteScrollDirective implements OnInit, OnDestroy, Afte
   }
 
   ngAfterViewInit() {
-    this.matSelect.openedChange.subscribe((opened) => {
+    this.matSelect.openedChange.pipe(
+      takeUntil(this.destroyed$)
+    ).subscribe((opened) => {
       if (opened) {
+        this.panel = this.matSelect.panel.nativeElement;
+        this.singleOptionHeight = this.getSelectItemHeightPx();
         this.registerScrollListener();
       }
     });
   }
 
   ngOnDestroy() {
-    if (this.scrollSubscription && this.scrollSubscription.unsubscribe) {
-      this.scrollSubscription.unsubscribe();
-    }
-    this.onDestroy.next();
-    this.onDestroy.complete();
+    this.destroyed$.next(true);
+    this.destroyed$.complete();
   }
 
   evaluateThreshold() {
@@ -54,8 +56,8 @@ export class MatSelectInfiniteScrollDirective implements OnInit, OnDestroy, Afte
   }
 
   registerScrollListener() {
-    this.scrollSubscription = fromEvent(this.panel, 'scroll').pipe(
-      takeUntil(this.onDestroy),
+    fromEvent(this.panel, 'scroll').pipe(
+      takeUntil(this.destroyed$),
       debounceTime(this.debounceTime),
       tap((event) => {
         this.handleScrollEvent(event);
@@ -64,27 +66,24 @@ export class MatSelectInfiniteScrollDirective implements OnInit, OnDestroy, Afte
   }
 
   handleScrollEvent(event) {
-    if (this.complete) {
-      return;
-    }
-    const singleOptionHeight = this.getSelectItemHeightPx();
-    const countOfRenderedOptions = this.matSelect.options.length;
-    const infiniteScrollDistance = singleOptionHeight * countOfRenderedOptions;
-    const threshold = this.thrPc !== 0 ? (infiniteScrollDistance * this.thrPc) : this.thrPx;
+    this.ngZone.runOutsideAngular(() => {
+      if (this.complete) {
+        return;
+      }
+      const countOfRenderedOptions = this.matSelect.options.length;
+      const infiniteScrollDistance = this.singleOptionHeight * countOfRenderedOptions;
+      const threshold = this.thrPc !== 0 ? (infiniteScrollDistance * this.thrPc) : this.thrPx;
 
-    const scrolledDistance = this.panel.clientHeight + event.target.scrollTop;
+      const scrolledDistance = this.panel.clientHeight + event.target.scrollTop;
 
-    if ((scrolledDistance + threshold) >= infiniteScrollDistance) {
-      this.infiniteScroll.emit();
-    }
+      if ((scrolledDistance + threshold) >= infiniteScrollDistance) {
+        this.ngZone.run(() => this.infiniteScroll.emit());
+      }
+    });
   }
 
   getSelectItemHeightPx(): number {
-    return parseFloat(getComputedStyle(this.matSelect.panel.nativeElement).fontSize) * SELECT_ITEM_HEIGHT_EM;
-  }
-
-  get panel() {
-    return this.matSelect.panel.nativeElement;
+    return parseFloat(getComputedStyle(this.panel).fontSize) * SELECT_ITEM_HEIGHT_EM;
   }
 
 }
