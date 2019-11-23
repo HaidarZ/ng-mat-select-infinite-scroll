@@ -1,6 +1,6 @@
 {
   "name": "ng-mat-select-infinite-scroll",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -8,7 +8,9 @@
     "develop": "ng build ng-mat-select-infinite-scroll --prod=false --watch",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "npm_pack": "cd dist/ng-mat-select-infinite-scroll && npm pack",
+    "package": "npm run build && npm run npm_pack"
   },
   "private": false,
   "dependencies": {
@@ -49,5 +51,9 @@
     "tsickle": "^0.37.0",
     "tslint": "~5.15.0",
     "typescript": "~3.5.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HaidarZ/ng-mat-select-infinite-scroll.git"
   }
 }
