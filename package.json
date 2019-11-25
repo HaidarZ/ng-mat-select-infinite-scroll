@@ -1,6 +1,6 @@
 {
   "name": "ng-mat-select-infinite-scroll",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
