@@ -18,7 +18,6 @@ jobs:
           npm run build
           cp 'README.md' 'LICENSE' ./dist/ng-mat-select-infinite-scroll/
           cd dist/ng-mat-select-infinite-scroll && npm pack
-          cd ../..
           npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
