@@ -1,9 +1,0 @@
-dist: bionic
-language: node_js
-node_js:
-  - 10
-install:
-  - npm install
-script:
-  - npm run build
-
