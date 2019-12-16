@@ -27,7 +27,7 @@ npm i ng-mat-select-infinite-scroll
 
 Import `MatSelectInfiniteScrollModule` inside the app.module.ts
 ```typescript
-import { MatFormFieldModule, MatSelectModule } from '@angular/material';
+import { MatFormFieldModule, MatSelectModule } from '@angular/material/select';
 import {MatSelectInfiniteScrollModule} from 'ng-mat-select-infinite-scroll';
 
 @NgModule({
