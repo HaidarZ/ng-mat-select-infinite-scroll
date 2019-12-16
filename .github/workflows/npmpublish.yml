@@ -16,7 +16,8 @@ jobs:
       - run: npm ci
       - run: |
           npm run build
-          cp 'README.md' 'LICENSE' ./dist/ng-mat-select-infinite-scroll/
+          cp README.md ./dist/ng-mat-select-infinite-scroll/
+          cp LICENSE ./dist/ng-mat-select-infinite-scroll/
           cd dist/ng-mat-select-infinite-scroll && npm pack
           npm publish
         env:
