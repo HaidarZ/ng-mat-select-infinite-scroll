@@ -50,12 +50,12 @@ export class AppModule {
 
 Then place the msInfiniteScroll directive on the `mat-select` component
 ```html
-  <mat-form-field appearance="outline">
-    <mat-label>Select</mat-label>
-    <mat-select msInfiniteScroll (infiniteScroll)="getNextBatch()" [complete]="offset === data.length">
-      <mat-option *ngFor="let option of options$ | async" [value]="option">{{option}}</mat-option>
-    </mat-select>
-  </mat-form-field>
+<mat-form-field appearance="outline">
+  <mat-label>Select</mat-label>
+  <mat-select msInfiniteScroll (infiniteScroll)="getNextBatch()" [complete]="offset === data.length">
+    <mat-option *ngFor="let option of options$ | async" [value]="option">{{option}}</mat-option>
+  </mat-select>
+</mat-form-field>
 ```
 
 ### Compatibility
