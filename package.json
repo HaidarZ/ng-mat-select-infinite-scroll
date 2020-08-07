@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build ng-mat-select-infinite-scroll",
+    "build": "ng build ng-mat-select-infinite-scroll --prod",
     "develop": "ng build ng-mat-select-infinite-scroll --prod=false --watch",
     "test": "ng test",
     "lint": "ng lint",
