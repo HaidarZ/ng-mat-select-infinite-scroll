@@ -4,9 +4,9 @@
   "newProjectRoot": "projects",
   "projects": {
     "ng-mat-select-infinite-scroll": {
+      "projectType": "library",
       "root": "projects/ng-mat-select-infinite-scroll",
       "sourceRoot": "projects/ng-mat-select-infinite-scroll/src",
-      "projectType": "library",
       "prefix": "ms",
       "architect": {
         "build": {
@@ -14,6 +14,11 @@
           "options": {
             "tsConfig": "projects/ng-mat-select-infinite-scroll/tsconfig.lib.json",
             "project": "projects/ng-mat-select-infinite-scroll/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ng-mat-select-infinite-scroll/tsconfig.lib.prod.json"
+            }
           }
         },
         "test": {
@@ -39,11 +44,11 @@
       }
     },
     "example": {
-      "root": "projects/example/",
-      "sourceRoot": "projects/example/src",
       "projectType": "application",
-      "prefix": "app",
       "schematics": {},
+      "root": "projects/example",
+      "sourceRoot": "projects/example/src",
+      "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -53,6 +58,7 @@
             "main": "projects/example/src/main.ts",
             "polyfills": "projects/example/src/polyfills.ts",
             "tsConfig": "projects/example/tsconfig.app.json",
+            "aot": true,
             "assets": [
               "projects/example/src/favicon.ico",
               "projects/example/src/assets"
@@ -60,8 +66,7 @@
             "styles": [
               "projects/example/src/styles.css"
             ],
-            "scripts": [],
-            "es5BrowserSupport": true
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -76,7 +81,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -85,6 +89,11 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
                 }
               ]
             }
@@ -114,14 +123,14 @@
             "polyfills": "projects/example/src/polyfills.ts",
             "tsConfig": "projects/example/tsconfig.spec.json",
             "karmaConfig": "projects/example/karma.conf.js",
-            "styles": [
-              "projects/example/src/styles.css"
-            ],
-            "scripts": [],
             "assets": [
               "projects/example/src/favicon.ico",
               "projects/example/src/assets"
-            ]
+            ],
+            "styles": [
+              "projects/example/src/styles.css"
+            ],
+            "scripts": []
           }
         },
         "lint": {
@@ -131,34 +140,6 @@
               "projects/example/tsconfig.app.json",
               "projects/example/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "example-e2e": {
-      "root": "projects/example-e2e/",
-      "projectType": "application",
-      "prefix": "",
-      "architect": {
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "projects/example-e2e/protractor.conf.js",
-            "devServerTarget": "example:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "example:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": "projects/example-e2e/tsconfig.e2e.json",
             "exclude": [
               "**/node_modules/**"
             ]
