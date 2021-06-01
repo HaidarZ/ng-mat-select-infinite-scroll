@@ -1,7 +1,10 @@
 import {AfterViewInit, Directive, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output} from '@angular/core';
-import {MatSelect, SELECT_ITEM_HEIGHT_EM} from '@angular/material/select';
+import {MatSelect} from '@angular/material/select';
 import {debounceTime, takeUntil, tap} from 'rxjs/operators';
 import {fromEvent, Subject} from 'rxjs';
+
+/** The height of the select items in `em` units. */
+const SELECT_ITEM_HEIGHT_EM = 3;
 
 @Directive({
   selector: '[msInfiniteScroll]'
