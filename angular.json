@@ -10,16 +10,19 @@
       "prefix": "ms",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "projects/ng-mat-select-infinite-scroll/tsconfig.lib.json",
             "project": "projects/ng-mat-select-infinite-scroll/ng-package.json"
           },
           "configurations": {
             "production": {
               "tsConfig": "projects/ng-mat-select-infinite-scroll/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ng-mat-select-infinite-scroll/tsconfig.lib.json"
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
@@ -27,18 +30,6 @@
             "main": "projects/ng-mat-select-infinite-scroll/src/test.ts",
             "tsConfig": "projects/ng-mat-select-infinite-scroll/tsconfig.spec.json",
             "karmaConfig": "projects/ng-mat-select-infinite-scroll/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/ng-mat-select-infinite-scroll/tsconfig.lib.json",
-              "projects/ng-mat-select-infinite-scroll/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         }
       }

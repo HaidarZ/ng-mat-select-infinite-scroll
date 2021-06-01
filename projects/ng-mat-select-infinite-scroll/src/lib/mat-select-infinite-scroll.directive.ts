@@ -13,10 +13,10 @@ export class MatSelectInfiniteScrollDirective implements OnInit, OnDestroy, Afte
 
   @Input() threshold = '15%';
   @Input() debounceTime = 150;
-  @Input() complete: boolean;
+  @Input() complete!: boolean;
   @Output() infiniteScroll = new EventEmitter<void>();
 
-  private panel: Element;
+  private panel!: Element;
   private thrPx = 0;
   private thrPc = 0;
   private singleOptionHeight = SELECT_ITEM_HEIGHT_EM;
@@ -68,7 +68,7 @@ export class MatSelectInfiniteScrollDirective implements OnInit, OnDestroy, Afte
     ).subscribe();
   }
 
-  handleScrollEvent(event) {
+  handleScrollEvent(event: any) {
     this.ngZone.runOutsideAngular(() => {
       if (this.complete) {
         return;

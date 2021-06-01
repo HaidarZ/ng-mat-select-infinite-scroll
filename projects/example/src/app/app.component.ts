@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
 
   constructor() {
     this.options$ = this.options.asObservable().pipe(
-      scan((acc, curr) => {
+      scan((acc: any[], curr: any[]) => {
         return [...acc, ...curr];
       }, [])
     );
