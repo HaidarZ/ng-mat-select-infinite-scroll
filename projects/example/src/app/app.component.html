@@ -9,7 +9,7 @@
 <div class="container">
   <mat-form-field appearance="outline">
     <mat-label>Select</mat-label>
-    <mat-select msInfiniteScroll (infiniteScroll)="getNextBatch()" [complete]="offset === data.length">
+    <mat-select msInfiniteScroll (infiniteScroll)="getNextBatch()" [complete]="offset === data.length" threshold="20%" [debounceTime]="100">
       <mat-option *ngFor="let option of options$ | async" [value]="option">{{option}}</mat-option>
     </mat-select>
   </mat-form-field>
