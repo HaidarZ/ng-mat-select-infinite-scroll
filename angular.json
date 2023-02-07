@@ -54,9 +54,7 @@
               "projects/example/src/favicon.ico",
               "projects/example/src/assets"
             ],
-            "styles": [
-              "projects/example/src/styles.css"
-            ],
+            "styles": ["projects/example/src/styles.css"],
             "scripts": []
           },
           "configurations": {
@@ -70,7 +68,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -118,9 +115,7 @@
               "projects/example/src/favicon.ico",
               "projects/example/src/assets"
             ],
-            "styles": [
-              "projects/example/src/styles.css"
-            ],
+            "styles": ["projects/example/src/styles.css"],
             "scripts": []
           }
         },
@@ -131,13 +126,10 @@
               "projects/example/tsconfig.app.json",
               "projects/example/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
     }
-  },
-  "defaultProject": "ng-mat-select-infinite-scroll"
+  }
 }
