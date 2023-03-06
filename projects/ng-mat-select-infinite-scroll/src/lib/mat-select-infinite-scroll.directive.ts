@@ -1,5 +1,5 @@
 import {AfterViewInit, Directive, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output} from '@angular/core';
-import {MatSelect} from '@angular/material/select';
+import {MatLegacySelect as MatSelect} from '@angular/material/legacy-select';
 import {debounceTime, takeUntil, tap} from 'rxjs/operators';
 import {fromEvent, Subject} from 'rxjs';
 
