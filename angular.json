@@ -57,7 +57,12 @@
             "styles": [
               "projects/example/src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "sourceMap": {
+              "scripts": true,
+              "styles": true,
+              "vendor": true
+            }
           },
           "configurations": {
             "production": {
@@ -93,7 +98,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "example:build"
+            "browserTarget": "example:build",
           },
           "configurations": {
             "production": {
@@ -139,5 +144,8 @@
       }
     }
   },
-  "defaultProject": "ng-mat-select-infinite-scroll"
+  "defaultProject": "ng-mat-select-infinite-scroll",
+  "cli": {
+    "analytics": false
+  }
 }
