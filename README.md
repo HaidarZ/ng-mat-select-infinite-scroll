@@ -1,34 +1,37 @@
 
 # Angular Material Select Infinite Scroll  
-  
-Adds missing infinite scroll functionality for the [angular material select component](https://material.angular.io/components/select)
-  
-  
+
+Adds missing infinite scroll functionality for the [Angular Material Select component](https://material.angular.io/components/select).  
+
 ### Inputs  
-  
-| Property       | Description                                                                                                                                                                                                                                                                                                              | Type      | Default    |  
-| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------| ---------- |  
-| `complete`     | If `true`, the `infiniteScroll` output will no longer be triggered                                                                                                                                                                                                                                                        | `boolean` | `false`    |  
-| `threshold`    | The threshold distance from the bottom of the options list to call the `infiniteScroll` output event when scrolled. The threshold value can be either in percent, or in pixels. For example, use the value of `10%` for the `infiniteScroll` output event to get called when the user has needs 10% to reach the bottom. | `string`  | `'15%'`    |
-| `debounceTime` | The threshold time before firing the `infiniteScroll` event                                                                                                                                                                                                                                                              | `number`  | `150`      |
-### Outputs
-| Property         | Description                                                                             | Type                                                                                                                                                                                                                                                                                                                                          |
-| ----------------- | --------------------------------------------------------------------------------------- | --------------------
-| `infiniteScroll`  | Emitted when the scroller inside the `mat-select` reaches the required distance         | `EventEmitter<void>`
 
-### Installation
+| Property       | Description                                                                                                                                                                                                                  | Type      | Default    |  
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------| ---------- |  
+| `complete`     | If `true`, the `infiniteScroll` output will no longer be triggered.                                                                                                                                                          | `boolean` | `false`    |  
+| `threshold`    | The threshold distance from the bottom of the options list to call the `infiniteScroll` output event when scrolled. The threshold value can be either in percent or pixels. For example, `10%` triggers the event 10% before the bottom. | `string`  | `'15%'`    |  
+| `debounceTime` | The threshold time (in milliseconds) before firing the `infiniteScroll` event.                                                                                                                                               | `number`  | `150`      |  
 
-```
+### Outputs  
+
+| Property         | Description                                                                             | Type                  |  
+| ----------------- | --------------------------------------------------------------------------------------- | --------------------- |  
+| `infiniteScroll`  | Emitted when the scroller inside the `mat-select` reaches the required distance.        | `EventEmitter<void>`  |  
+
+### Installation  
+
+```bash
 npm i ng-mat-select-infinite-scroll
 ```
 
-### Usage
-[StackBlitz working example](https://stackblitz.com/edit/ng-mat-select-infinite-scroll)
+### Usage  
 
-Import `MatSelectInfiniteScrollModule` inside the app.module.ts
+[StackBlitz working example](https://stackblitz.com/edit/ng-mat-select-infinite-scroll)  
+
+Import `MatSelectInfiniteScrollModule` inside the `app.module.ts`:  
 ```typescript
-import { MatFormFieldModule, MatSelectModule } from '@angular/material/select';
-import {MatSelectInfiniteScrollModule} from 'ng-mat-select-infinite-scroll';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSelectInfiniteScrollModule } from 'ng-mat-select-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -44,11 +47,10 @@ import {MatSelectInfiniteScrollModule} from 'ng-mat-select-infinite-scroll';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule {}
 ```
 
-Then place the msInfiniteScroll directive on the `mat-select` component
+Then, place the `msInfiniteScroll` directive on the `mat-select` component:  
 ```html
 <mat-form-field appearance="outline">
   <mat-label>Select</mat-label>
@@ -58,28 +60,34 @@ Then place the msInfiniteScroll directive on the `mat-select` component
 </mat-form-field>
 ```
 
-### Compatibility
+> **Note:**  
+> Update the `complete` property when the loaded data reaches the total available data to avoid unnecessary scroll triggers.  
+> For older versions of Angular (<15), use version 4 of this library.
 
-* `@angular/core`: `>=6.0.0 <16`,
-* `@angular/cdk`: `>=6.0.0 <16`,
-* `@angular/material`: `>=6.0.0 <16`,
-* `rxjs`: `^7.0.0`
+### Compatibility  
 
-### Contributions
-Contributions are welcomed, feel free to open a Pull-Request or open a new issue.
+This library supports Angular 15 and higher.  
+* `@angular/core`: `>=15.0.0 <16`  
+* `@angular/cdk`: `>=15.0.0 <16`  
+* `@angular/material`: `>=15.0.0 <16`  
+* `rxjs`: `^7.0.0`  
 
-### Development server
+### Contributions  
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Contributions are welcome! Feel free to open a Pull Request or create a new issue.  
 
-### Build
+### Development Server  
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any source files.  
 
-### Running unit tests
+### Build  
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.  
 
-# License
+### Running Unit Tests  
 
-[MIT](LICENSE)
+Run `ng test` to execute unit tests via [Karma](https://karma-runner.github.io).  
+
+### License  
+
+[MIT](LICENSE)  
