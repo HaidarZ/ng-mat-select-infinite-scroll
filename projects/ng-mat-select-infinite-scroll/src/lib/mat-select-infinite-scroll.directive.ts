@@ -1,6 +1,6 @@
 import {AfterViewInit, Directive, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output} from '@angular/core';
 import {MatSelect} from '@angular/material/select';
-import {takeUntil} from 'rxjs/operators';
+import {delay, takeUntil} from 'rxjs/operators';
 import {InfiniteScrollService} from "./infinite-scroll.service";
 import {Subject} from "rxjs";
 
@@ -26,6 +26,7 @@ export class MatSelectInfiniteScrollDirective implements OnDestroy, AfterViewIni
 
     ngAfterViewInit() {
         this.matSelect.openedChange.pipe(
+            delay(0),
             takeUntil(this.destroyed$)
         ).subscribe((opened) => {
             if (opened) {
