@@ -26,6 +26,7 @@ export class MatSelectInfiniteScrollDirective implements OnDestroy, AfterViewIni
 
     ngAfterViewInit() {
         this.matSelect.openedChange.pipe(
+            //Wait for the panel to be rendered (https://github.com/angular/components/issues/30596)
             delay(0),
             takeUntil(this.destroyed$)
         ).subscribe((opened) => {
