@@ -53,16 +53,17 @@ export class InfiniteScrollService {
         ).subscribe();
     }
 
-    handleScrollEvent(event: any, infiniteScrollCallback: () => void) {
+    handleScrollEvent(event: Event, infiniteScrollCallback: () => void) {
+        if (this.complete || !event.target) {
+            return;
+        }
+
         this.ngZone.runOutsideAngular(() => {
-            if (this.complete) {
-                return;
-            }
             const countOfRenderedOptions = Math.round(this.panel.scrollHeight / this.selectItemHeightPx);
             const infiniteScrollDistance = this.selectItemHeightPx * countOfRenderedOptions;
             const threshold = this.thrPc !== 0 ? (infiniteScrollDistance * this.thrPc) : this.thrPx;
 
-            const scrolledDistance = this.panel.clientHeight + event.target.scrollTop;
+            const scrolledDistance = this.panel.clientHeight + (event.target as HTMLElement).scrollTop;
 
             if ((scrolledDistance + threshold) >= infiniteScrollDistance) {
                 this.ngZone.run(infiniteScrollCallback);
