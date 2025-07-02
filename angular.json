@@ -42,12 +42,15 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/example",
+            "outputPath": {
+              "base": "dist/example"
+            },
             "index": "projects/example/src/index.html",
-            "main": "projects/example/src/main.ts",
-            "polyfills": "projects/example/src/polyfills.ts",
+            "polyfills": [
+              "projects/example/src/polyfills.ts"
+            ],
             "tsConfig": "projects/example/tsconfig.app.json",
             "aot": true,
             "assets": [
@@ -62,7 +65,8 @@
               "scripts": true,
               "styles": true,
               "vendor": true
-            }
+            },
+            "browser": "projects/example/src/main.ts"
           },
           "configurations": {
             "production": {
@@ -78,8 +82,6 @@
               "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -98,18 +100,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "example:build",
+            "buildTarget": "example:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "example:build:production"
+              "buildTarget": "example:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "example:build"
+            "buildTarget": "example:build"
           }
         },
         "test": {
@@ -144,7 +146,6 @@
       }
     }
   },
-  "defaultProject": "ng-mat-select-infinite-scroll",
   "cli": {
     "analytics": false
   }

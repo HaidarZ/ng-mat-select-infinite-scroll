@@ -23,7 +23,7 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@angular/core": ">=15.0.0 <17.0.0",
-    "@angular/material": ">=15.0.0 <17.0.0"
+    "@angular/core": ">=16.0.0 <20.0.0",
+    "@angular/material": ">=16.0.0 <20.0.0"
   }
 }

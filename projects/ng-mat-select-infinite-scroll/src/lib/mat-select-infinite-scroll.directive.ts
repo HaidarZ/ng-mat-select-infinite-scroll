@@ -1,4 +1,4 @@
-import {AfterViewInit, Directive, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Directive, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {MatSelect} from '@angular/material/select';
 import {delay, takeUntil} from 'rxjs/operators';
 import {InfiniteScrollService} from "./infinite-scroll.service";
@@ -9,7 +9,8 @@ const SELECT_ITEM_HEIGHT_EM = 3;
 
 @Directive({
     selector: '[msInfiniteScroll]',
-    providers: [InfiniteScrollService]
+    providers: [InfiniteScrollService],
+    standalone: false
 })
 export class MatSelectInfiniteScrollDirective implements OnDestroy, AfterViewInit {
 

@@ -67,9 +67,9 @@ Then, place the `msInfiniteScroll` directive on the `mat-select` component:
 ### Compatibility  
 
 This library supports Angular 15 and higher.  
-* `@angular/core`: `>=15.0.0 <16`  
-* `@angular/cdk`: `>=15.0.0 <16`  
-* `@angular/material`: `>=15.0.0 <16`  
+* `@angular/core`: `>=16.0.0 <20`  
+* `@angular/cdk`: `>=16.0.0 <20`  
+* `@angular/material`: `>=16.0.0 <20`  
 * `rxjs`: `^7.0.0`  
 
 ### Contributions  
