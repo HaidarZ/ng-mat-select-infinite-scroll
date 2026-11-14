@@ -64,7 +64,21 @@
     }
   ],
   "demo": "production build and paging/search/selection/retry smoke passed",
-  "hostedCI": "pending",
+  "hostedCI": {
+    "conclusion": "success",
+    "platform": "ubuntu-latest",
+    "commit": "3e4d59c92abf7472d5d84928e7083938bf0e636a",
+    "url": "https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43541949727"
+  },
+  "publication": {
+    "status": "awaiting-npm-access",
+    "published": false,
+    "channel": "next",
+    "validationJobs": "all passed",
+    "registryError": "E404: package not found or publication access denied",
+    "attempt": "https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43542952173",
+    "nextAction": "Verify npm trusted publisher: GitHub owner HaidarZ, repository ng-mat-select-infinite-scroll, workflow npmpublish.yml, environment npm, direct npm publish allowed; retry the failed publication job"
+  },
   "knownLimitation": "Material active keyboard item can reset after append; separately characterized in browser receipts",
   "scenarios": [
     "paging",

@@ -14,6 +14,8 @@ Use Node 18.19 for the isolated Angular 15.2 library build/unit tests and Node 2
 
 Build/test/pack before publication; `npm run release:check` requires receipts for the exact tarball from every latest/minimum consumer. The `Publish validated package` workflow accepts `next` or `latest` explicitly and publishes the validated tarball using OIDC. Configure npm's trusted publisher for this repository, `npmpublish.yml`, and the `npm` environment; account setup is separate from code changes.
 
+In the npm package's **Settings → Trusted publishing**, configure GitHub Actions with owner **HaidarZ**, repository **ng-mat-select-infinite-scroll**, workflow filename **npmpublish.yml**, environment **npm**, and **Allow npm publish**. Fields must match exactly. See [npm's trusted-publisher instructions](https://docs.npmjs.com/trusted-publishers/). A failed publication can be retried using the same run's successful validation and retained artifacts after access is corrected; regenerate validation if package inputs change or artifacts expire.
+
 Stable publishing requires the exact approved version and `docs/releases/<version>-feedback.json`, with a published beta candidate, two distinct real external-project validations (`project`, `validated`, `sourceHash`, `evidence`), and at least seven days since that candidate's registry publication. Do not fill that record with generated fixtures or assumed feedback.
 
 Retain historical install guidance. If a genuine framework boundary requires another package line, maintain a precise version table and backport relevant fixes; do not unpublish packages as a routine rollback.
