@@ -1,12 +1,13 @@
 # Revival status
 
-Updated **14 November 2026**. Candidate: **6.0.0-next.0**.
+Updated **14 November 2026**. Published beta: [**6.0.0-next.0**](https://www.npmjs.com/package/ng-mat-select-infinite-scroll/v/6.0.0-next.0), under `next`.
 
 - Core fixes, standalone/NgModule support, multi-version consumers, demo, docs, and release tooling are implemented.
 - **25 unit checks and all 16 latest/minimum Angular 15.2–22 consumer checks pass locally.** The same tarball was used for all checks.
 - The Angular 22 demo builds and passes browser checks for paging, search/reset, retained selections, and retry.
-- The local release-artifact gate and [hosted CI](https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43583263875) pass, including all 16 consumers and the demo. Beta publication/feedback and stable approval remain separate steps.
-- Both the [initial OIDC attempt](https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43542952173) and [historical token retry](https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43583272148) passed all validation and received npm `E404`. The author has selected **Trusted Publishing only**; the token fallback is removed while GitHub-release publishing is retained. An existing Trusted Publisher was verified in the npm settings UI: repository/workflow match and direct publishing is allowed. Saving the `npm` environment restriction reached npm's Security Key verification; user verification and a successful OIDC publish remain pending.
+- The [complete release workflow](https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43586067177) passed all validation and published through **npm Trusted Publishing only**, with signed provenance and no stored npm token.
+- The registry tarball matches the tested artifact byte for byte. Fresh registry installs, production builds, and browser checks pass on Angular **15, 19, and 22** (seven application bootstraps). Provenance subjects and workflow/commit identity match the release artifact.
+- `next` is `6.0.0-next.0`; `latest` remains `5.0.0-beta.3`. Beta feedback is open; stable approval remains pending.
 - Known limitation: Material can reset its active keyboard item when options append; viewport retention and paging are fixed. See [known limitations](docs/KNOWN_LIMITATIONS.md).
 
 Evidence: [validation summary](docs/VALIDATION.md), [machine-readable record](docs/releases/6.0.0-next.0.validation.json), [dependency assessment](docs/DEPENDENCIES.md).
@@ -18,9 +19,9 @@ Evidence: [validation summary](docs/VALIDATION.md), [machine-readable record](do
 | R06: selection and keyboard | Validated with documented limitation | #9/#16 sequences and viewport/selection retention pass; Material active-item behavior remains tracked. |
 | R07: complete version matrix | Validated locally and in CI | Eight majors, each latest/minimum, 36 application bootstraps. |
 | R08: demo and adoption | Validated locally and in CI | Working demo, compatibility/migration/API docs, request/cache recipes. |
-| R09: CI and release tooling | Validated; OIDC setup pending | Full checks pass at `4ba4ee3`; publication now uses OIDC only, with GitHub-release and manual triggers. |
+| R09: CI and release tooling | Validated and used | Full checks and OIDC publication pass at `c1dedcb`; GitHub-release and manual triggers retain the same gates. |
 | R10: backlog dispositions | Drafted | All ten issues/two PRs mapped in [GITHUB_TRIAGE.md](docs/GITHUB_TRIAGE.md); publication links precede released-fix claims. |
-| R11: beta | Awaiting npm verification | Finish the Security Key step, verify publisher settings, dispatch the current workflow, then verify the registry artifact and collect two real external-project validations over at least one week. |
+| R11: beta | Published; feedback open | Registry identity and fresh installs verified. Collect two real external-project validations; earliest one-week boundary is 21 November 2026 at 12:40 Beirut time. |
 | R12: stable | Pending | Validate stable artifact and obtain the agreed final approval before promoting `latest`. |
 | R13: follow-through | Pending | Carry out authorized backlog actions and record maintenance handoff. |
 
@@ -36,6 +37,6 @@ The original five lifecycle/configuration/geometry failures were observed before
 
 ## Resume
 
-Implementation is on `revive/6.0` in [draft PR #64](https://github.com/HaidarZ/ng-mat-select-infinite-scroll/pull/64); `master` has not been merged. The npm Trusted Publisher exists. Its environment field was blank; `npm` was entered and saved, reaching the user's Security Key verification. Observe completion and verify the saved settings using [the exact configuration](CONTRIBUTING.md#releases). Do not request or create a replacement npm token: the author explicitly selected OIDC-only publication. The existing secret is no longer referenced by this branch; retire it after the migration succeeds and the old default-branch workflow has been replaced.
+Implementation is on `revive/6.0` in [draft PR #64](https://github.com/HaidarZ/ng-mat-select-infinite-scroll/pull/64); `master` has not been merged. The npm publisher is bound to environment `npm`; the author completed Security Key verification, and OIDC publication succeeded. Do not request or create a replacement npm token. The old secret is no longer referenced by this branch; retire it after the old default-branch workflow has been replaced.
 
-After trust is configured, run `gh workflow run npmpublish.yml --repo HaidarZ/ng-mat-select-infinite-scroll --ref revive/6.0 -f channel=next`. Do not rerun historical workflows that reference the stored token. Verify the registry tarball hash and fresh Angular 15/19/22 installs after publication; begin the beta feedback interval only then. Preserve [compatibility.json](compatibility.json), do not count fixtures as external feedback, and do not mark the revival complete before stable registry verification.
+Continue by identifying two real Angular projects for beta validation and recording their versions/evidence against implementation fingerprint `8779dbc3851fe3db544e33d706fa6ff00e5ddd53e9fc27cb4979d927417d0545`. The generated registry checks do not count as external-project feedback. The beta was published at `2026-11-14T10:40:43.980Z`; the minimum interval ends at `2026-11-21T10:40:43.980Z`. Resolve feedback before preparing a separately validated stable artifact and obtaining final approval. Do not republish this immutable version or count the whole revival complete before stable registry verification. No unattended monitoring or scheduled promotion is configured.

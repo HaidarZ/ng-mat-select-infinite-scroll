@@ -1,8 +1,8 @@
 # Candidate validation
 
-Validated locally on 14 November 2026 (macOS arm64) and in [GitHub CI on Ubuntu](https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43583263875) at commit `4ba4ee3`. All unit, consumer, demo, and release-gate jobs passed. The first publication workflow omitted the existing `NPM_TOKEN` secret. The [corrected publication attempt](https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43583272148) restores token authentication and GitHub-release publishing, repeats every validation successfully, and supplies the secret, but npm still rejects publication with `E404` (package access). The candidate remains unpublished pending npm account access.
+Validated locally on 14 November 2026 (macOS arm64) and in [the successful GitHub release workflow](https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43586067177) at commit `c1dedcb`. All unit, consumer, demo, and release-gate jobs passed. **6.0.0-next.0 is published under `next` through npm Trusted Publishing with OIDC and signed provenance.** No stored npm token is passed to the workflow.
 
-The author's subsequent decision is **Trusted Publishing only**. The stored-token fallback has been removed; configure the npm publisher using [CONTRIBUTING.md](../CONTRIBUTING.md#releases) and dispatch the current workflow. Historical token runs must not be retried.
+The downloaded registry tarball matches the tested artifact's SHA-256 and npm's SHA-512 integrity. Attestation subjects match that tarball; provenance identifies this repository, `.github/workflows/npmpublish.yml`, commit `c1dedcbd8f380fac3bb13d39efdb1f278ff90156`, and the successful run. `latest` remains `5.0.0-beta.3`.
 
 Release routing checks cover GitHub prerelease/stable events and manual beta/approved-stable runs. Mismatched release tags and prerelease/stable channels are rejected before publication.
 
@@ -26,5 +26,7 @@ Tarball SHA-256: `0e25b5c4dcc6922c3828e9a1e6676c8806ce74f7aa1fa0b736556f6745257f
 Browser scenarios cover paging, exact scroll-position retention, live loading/completion, repeated opening, preselected last items, the #16 selection sequence, errors/retry, bounded short-list filling, custom density and optgroups, multiple selection, and keyboard paging. Material active-item preservation is characterized separately; its remaining reset behavior is documented in [known limitations](KNOWN_LIMITATIONS.md).
 
 The Angular 22 demo passes a production build and browser checks for paging, search/reset, retained selection, failed requests, and retry. Its screenshot was visually inspected.
+
+After publication, fresh installs of `ng-mat-select-infinite-scroll@6.0.0-next.0` from the public npm registry passed production builds and all browser scenarios on Angular **15.2.10**, **19.2.25**, and **22.2.6**. Installed-package resolution/integrity were checked against registry metadata. Both import modes pass; Angular 22 also passes zoneless mode (seven application bootstraps total). These generated consumers do not count as the two required real external-project validations.
 
 The remediated floor builder produces byte-identical package output. Current dependency dispositions are in [DEPENDENCIES.md](DEPENDENCIES.md). Raw local logs/screenshots/receipts are ignored under `artifacts/`; the durable summary is [the validation record](releases/6.0.0-next.0.validation.json).

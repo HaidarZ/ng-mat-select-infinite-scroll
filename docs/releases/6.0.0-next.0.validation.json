@@ -67,21 +67,72 @@
   "hostedCI": {
     "conclusion": "success",
     "platform": "ubuntu-latest",
-    "commit": "4ba4ee3ad04bbc6e2862d5c4bb4e0b3282a4ff2a",
-    "url": "https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43583263875"
+    "commit": "c1dedcbd8f380fac3bb13d39efdb1f278ff90156",
+    "url": "https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43586067177"
   },
   "publication": {
-    "status": "awaiting-npm-trusted-publisher",
-    "authentication": "oidc-only",
-    "published": false,
+    "status": "published-and-registry-verified",
+    "published": true,
+    "version": "6.0.0-next.0",
     "channel": "next",
-    "validationJobs": "all passed",
-    "registryError": "E404: package not found or publication access denied",
-    "attempt": "https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43583272148",
-    "historicalAttemptTokenSupplied": true,
-    "authenticationCorrection": "Historical token retry failed; the author selected Trusted Publishing only. The token fallback is removed and GitHub-release publishing is retained",
-    "trustedPublisher": "Observed in npm UI with matching repository/workflow and npm publish allowed; saving environment npm reached Security Key verification",
-    "nextAction": "Complete npm Security Key verification, verify environment npm is saved, then dispatch the OIDC-only workflow on revive/6.0 with channel next"
+    "authentication": "oidc-only",
+    "publishedAt": "2026-11-14T10:40:43.980Z",
+    "workflow": "https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43586067177",
+    "registryTarball": "https://registry.npmjs.org/ng-mat-select-infinite-scroll/-/ng-mat-select-infinite-scroll-6.0.0-next.0.tgz",
+    "sha256": "0e25b5c4dcc6922c3828e9a1e6676c8806ce74f7aa1fa0b736556f6745257fc6",
+    "integrity": "sha512-LsMO2AeC/E1LKp3wOBw3ii9ceGYUraPLrw30HtNkWH74czftdWxeOML+SM6x4h20ZPeXI7R0vhNABnAsmfZBzA==",
+    "distTags": {
+      "latest": "5.0.0-beta.3",
+      "next": "6.0.0-next.0"
+    },
+    "attestations": {
+      "url": "https://registry.npmjs.org/-/npm/v1/attestations/ng-mat-select-infinite-scroll@6.0.0-next.0",
+      "provenance": {
+        "predicateType": "https://slsa.dev/provenance/v1"
+      }
+    },
+    "provenanceIdentity": {
+      "repository": "https://github.com/HaidarZ/ng-mat-select-infinite-scroll",
+      "workflow": ".github/workflows/npmpublish.yml",
+      "sourceCommit": "c1dedcbd8f380fac3bb13d39efdb1f278ff90156",
+      "invocation": "https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43586067177/attempts/1"
+    },
+    "freshRegistryConsumers": [
+      {
+        "angular": "15.2.10",
+        "major": 15,
+        "passed": true,
+        "modes": [
+          "module",
+          "standalone"
+        ],
+        "packageSource": "npm-registry"
+      },
+      {
+        "angular": "19.2.25",
+        "major": 19,
+        "passed": true,
+        "modes": [
+          "module",
+          "standalone"
+        ],
+        "packageSource": "npm-registry"
+      },
+      {
+        "angular": "22.2.6",
+        "major": 22,
+        "passed": true,
+        "modes": [
+          "module",
+          "standalone",
+          "standalone&zoneless=1"
+        ],
+        "packageSource": "npm-registry"
+      }
+    ],
+    "externalProjectValidations": 0,
+    "earliestStableAfter": "2026-11-21T10:40:43.980000Z",
+    "nextAction": "Collect two actual external-project validations; resolve beta feedback; validate a stable artifact and obtain final approval after the minimum beta interval"
   },
   "knownLimitation": "Material active keyboard item can reset after append; separately characterized in browser receipts",
   "scenarios": [

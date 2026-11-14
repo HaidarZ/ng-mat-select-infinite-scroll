@@ -1,6 +1,6 @@
 # Changelog
 
-## 6.0.0-next.0 — unreleased
+## 6.0.0-next.0 — 2026-11-14
 
 - Target Angular/Material 15.2–22 with one floor-compiled package and per-major/minimum-version consumer checks.
 - Add direct standalone directive imports while retaining the NgModule wrapper.
