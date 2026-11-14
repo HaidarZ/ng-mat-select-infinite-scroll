@@ -22,6 +22,8 @@ Load options in pages as users scroll a standard Angular Material `mat-select`. 
 
 The demo renders the spinner inside the options panel while a page loads; `[loading]` prevents overlapping requests. The [demo component](projects/example/src/app/app.component.ts) also handles search, selection retention, completion, and retry.
 
+If this library is useful to you, please consider [giving it a star on GitHub](https://github.com/HaidarZ/ng-mat-select-infinite-scroll).
+
 ## Version compatibility
 
 **6.0.0** supports Angular/Material **15.2–22**. It is built with Angular 15.2 partial Ivy and tested against the minimum and latest versions of each supported Angular major. See [compatibility.json](compatibility.json) for exact versions and [compat/README.md](compat/README.md) for test commands.
