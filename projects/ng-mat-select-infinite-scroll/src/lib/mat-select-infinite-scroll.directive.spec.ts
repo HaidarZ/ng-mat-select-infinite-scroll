@@ -141,6 +141,73 @@ describe('MatSelectInfiniteScrollDirective', () => {
     expect(fixture.componentInstance.calls).toBe(1);
   }));
 
+  /** Navigate through Material's keyboard handler, rather than setting its manager directly. */
+  function highlightLastOption(): HTMLElement {
+    const host = fixture.debugElement.query(By.directive(MatSelect)).nativeElement as HTMLElement;
+    host.dispatchEvent(new KeyboardEvent('keydown', { key: 'End', keyCode: 35, bubbles: true }));
+    fixture.detectChanges();
+    expect(host.getAttribute('aria-activedescendant')).toBe(select.options.last.id);
+    return host;
+  }
+
+  it('preserves the active option and selection when a page appends', fakeAsync(() => {
+    select.value = 0;
+    open();
+    const host = highlightLastOption();
+    const activeId = select.options.last.id;
+    fixture.componentInstance.options = Array.from({ length: 30 }, (_, i) => i);
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    expect(host.getAttribute('aria-activedescendant')).toBe(activeId);
+    expect(select.value).toBe(0);
+    expect(panel.scrollTop).toBe(900);
+  }));
+
+  it('does not restore an old highlight over a deliberate selection change', fakeAsync(() => {
+    select.value = 0;
+    open();
+    const host = highlightLastOption();
+    fixture.componentInstance.options = Array.from({ length: 30 }, (_, i) => i);
+    fixture.detectChanges();
+    select.value = 5;
+    tick();
+    fixture.detectChanges();
+    expect(host.getAttribute('aria-activedescendant')).toBe(select.options.get(5)!.id);
+    expect(select.value).toBe(5);
+  }));
+
+  it('discards the pending highlight when options are replaced', fakeAsync(() => {
+    select.value = 0;
+    open();
+    const host = highlightLastOption();
+    fixture.componentInstance.options = Array.from({ length: 30 }, (_, i) => i);
+    fixture.detectChanges();
+    fixture.componentInstance.options = Array.from({ length: 30 }, (_, i) => i + 100);
+    select.value = 100;
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    expect(host.getAttribute('aria-activedescendant')).toBe(select.options.first.id);
+    expect(select.value).toBe(100);
+  }));
+
+  it('discards the pending highlight when closed before the append settles', fakeAsync(() => {
+    select.value = 0;
+    open();
+    highlightLastOption();
+    fixture.componentInstance.options = Array.from({ length: 30 }, (_, i) => i);
+    fixture.detectChanges();
+    select.close();
+    tick();
+    select.open();
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    const host = fixture.debugElement.query(By.directive(MatSelect)).nativeElement as HTMLElement;
+    expect(host.getAttribute('aria-activedescendant')).toBe(select.options.first.id);
+  }));
+
   it('does not override an application scroll reset when options are replaced', fakeAsync(() => {
     open();
     fixture.componentInstance.options = Array.from({ length: 30 }, (_, i) => i + 100);

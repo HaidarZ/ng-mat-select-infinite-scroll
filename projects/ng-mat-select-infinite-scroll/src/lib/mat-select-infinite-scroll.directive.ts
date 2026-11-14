@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Directive,
   EventEmitter,
   Input,
@@ -7,7 +8,9 @@ import {
   OnDestroy,
   Output,
   SimpleChanges,
+  inject,
 } from '@angular/core';
+import { MatOption } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
 import { Subscription } from 'rxjs';
 import { InfiniteScrollService, ScrollConfiguration } from './infinite-scroll.service';
@@ -60,6 +63,10 @@ export class MatSelectInfiniteScrollDirective implements AfterViewInit, OnChange
   /** Scroll position to restore after Material processes appended options. */
   private scrollAnchor?: number;
 
+  /** Active option and selection before Material reinitializes an appended list. */
+  private activeOptionAnchor?: { option: MatOption; value: unknown };
+  private readonly changeDetector = inject(ChangeDetectorRef);
+
   constructor(
     protected readonly matSelect: MatSelect,
     private readonly scroll: InfiniteScrollService,
@@ -103,9 +110,12 @@ export class MatSelectInfiniteScrollDirective implements AfterViewInit, OnChange
           this.matSelect.options.get(this.optionCount - 1) === this.lastOption
         ) {
           this.scrollAnchor = this.matSelect.panel?.nativeElement.scrollTop;
+          const option = this.matSelect._keyManager.activeItem;
+          this.activeOptionAnchor = option ? { option, value: this.matSelect.value } : undefined;
         } else {
           // Replacements can have the same count/geometry as the old query.
           this.scrollAnchor = undefined;
+          this.activeOptionAnchor = undefined;
           this.scroll.reset();
         }
         this.optionCount = count;
@@ -151,6 +161,7 @@ export class MatSelectInfiniteScrollDirective implements AfterViewInit, OnChange
     this.checkTimer = undefined;
     this.connected = false;
     this.scrollAnchor = undefined;
+    this.activeOptionAnchor = undefined;
     this.lastOption = undefined;
     this.scroll.disconnect();
   }
@@ -162,6 +173,25 @@ export class MatSelectInfiniteScrollDirective implements AfterViewInit, OnChange
     this.checkTimer = setTimeout(() => {
       this.checkTimer = undefined;
       if (this.connected && this.matSelect.panelOpen) {
+        const anchor = this.activeOptionAnchor;
+        this.activeOptionAnchor = undefined;
+        // MatSelect has no public active-option setter. Its internal key manager
+        // is shared by supported Material 15–22 releases; browser tests verify
+        // both aria-activedescendant and the next keyboard step on every version.
+        // Preserve existing options only, without undoing a new selection or a
+        // user navigation that has already moved away from Material's reset.
+        const manager = this.matSelect._keyManager;
+        if (
+          anchor &&
+          !anchor.option.disabled &&
+          this.matSelect.value === anchor.value &&
+          this.matSelect.options.toArray().includes(anchor.option) &&
+          (manager.activeItem === anchor.option || manager.activeItem?.selected)
+        ) {
+          manager.setActiveItem(anchor.option);
+          this.changeDetector.markForCheck();
+        }
+        // Changing the active item can scroll it into view; restore the viewport last.
         if (this.scrollAnchor !== undefined) {
           this.matSelect.panel.nativeElement.scrollTop = this.scrollAnchor;
           this.scrollAnchor = undefined;

@@ -47,11 +47,11 @@ Keep selected records separately from the current page, or fetch them by ID. Ren
 
 The [demo template](../projects/example/src/app/app.component.html) retains selected options across searches.
 
+## Keyboard navigation
+
+From 6.0.1, appending a page preserves the active keyboard option and scroll position. Arrow Down continues into the new page without changing the selected value. Replacing the query or deliberately changing the selection lets Material choose the active option normally.
+
 ## Limitations
-
-### Keyboard navigation
-
-Material can reset the active keyboard option to the selected option when pages append. The selected value and scroll position are preserved. This behavior is tracked in [#6](https://github.com/HaidarZ/ng-mat-select-infinite-scroll/issues/6) and [#17](https://github.com/HaidarZ/ng-mat-select-infinite-scroll/issues/17).
 
 ### Scroll containers and legacy components
 

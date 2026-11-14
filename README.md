@@ -26,11 +26,11 @@ If this library is useful to you, please consider [giving it a star on GitHub](h
 
 ## Version compatibility
 
-**6.0.0** supports Angular/Material **15.2–22**. It is built with Angular 15.2 partial Ivy and tested against the minimum and latest versions of each supported Angular major. See [compatibility.json](compatibility.json) for exact versions and [compat/README.md](compat/README.md) for test commands.
+**6.0.1** supports Angular/Material **15.2–22**. It is built with Angular 15.2 partial Ivy and tested against the minimum and latest versions of each supported Angular major. See [compatibility.json](compatibility.json) for exact versions and [compat/README.md](compat/README.md) for test commands.
 
 | Your application | Package |
 | --- | --- |
-| Angular/Material 15.2–22 | `6.0.0` (`latest`) |
+| Angular/Material 15.2–22 | `6.0.1` (`latest`) |
 | Angular/Material 15–16 (maintenance line) | `5.0.0` (`legacy`); excludes the 6.x fixes |
 | Angular below 15 | Historical `4.0.0` declares peers `>=6 <15`; verify your exact versions |
 
@@ -145,7 +145,7 @@ The demo tests `ngx-mat-select-search` **9.0.0** with Angular 22. Its current pe
 
 - Append options with stable IDs/identity. When clearing pages or filtering, retain the selected options separately or fetch them by ID; `compareWith` cannot recreate a removed option.
 - Keep the Material panel as the scrolling container. Arbitrary nested scrolling `div` elements are not supported. Standard options and optgroups are supported.
-- Appending pages preserves the panel's scroll position. **Material can still reset its active keyboard item to the selected option when the option list changes.** See [limitations](docs/RECIPES.md#limitations).
+- Appending pages preserves the panel's scroll position and active keyboard option, so Arrow Down continues into the next page. Replacing options or changing the selection follows Material's normal focus behavior.
 
 ## Migration from 4.x / 5.x
 

@@ -50,6 +50,7 @@ for (const consumer of policy.consumers) {
           name: `infinite-scroll-angular-${row.major}-consumer`,
           private: true,
           scripts: { build: 'ng build --configuration production' },
+          overrides: policy.consumerOverrides,
           dependencies,
           devDependencies: {
             '@angular/cli': row.cli,

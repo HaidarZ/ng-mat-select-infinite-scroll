@@ -14,6 +14,12 @@ Run `npm run format` for the tooling and library source. CI checks the same file
 
 `compatibility.json` lists supported versions and test toolchains. After changing it, run `npm run compat:generate` and update the affected lockfiles. Adding support for an Angular major is a minor library release; dropping support or raising a minimum is a major release.
 
+## Dependency maintenance
+
+Private development workspaces use `overrides` to patch transitive build tools while preserving the Angular/Material versions under test. Consumer pins live in [compatibility.json](compatibility.json). Version selectors retain compatible Piscina versions and keep older Angular builders on webpack 5.111, because 5.112 removes AMD modules they require. These tools are not included in the published library.
+
+Run `npm audit --package-lock-only` in affected workspaces when updating dependencies. Older Angular and development-tool advisories remain; compatibility coverage does not extend upstream security support. See the [consumer guide](compat/README.md) for the override pins and validation commands.
+
 ## Releases
 
 The [publishing workflow](.github/workflows/npmpublish.yml) runs the full compatibility matrix and demo checks before publishing the tested tarball. Publish a GitHub prerelease for `next`, or a stable release for `latest`. The release tag must match the package version, optionally prefixed with `v`. The workflow can also be started manually from Actions.

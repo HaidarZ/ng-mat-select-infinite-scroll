@@ -8,6 +8,17 @@ Historical entries were reconstructed from tagged source and GitHub release note
 
 ## [Unreleased]
 
+## [6.0.1] - 2026-11-15
+
+### Fixed
+
+- Preserve the active keyboard option when pages append, so Arrow Down continues into newly loaded options without changing the selected value ([#6](https://github.com/HaidarZ/ng-mat-select-infinite-scroll/issues/6)).
+- Discard pending keyboard restoration when options are replaced, the selection changes, or the panel closes.
+
+### Security
+
+- Update Piscina, webpack, and tar in the development and compatibility toolchains while retaining every Angular/Material version under test.
+
 ## [6.0.0] - 2026-11-14
 
 ### Added
@@ -172,7 +183,8 @@ Historical entries were reconstructed from tagged source and GitHub release note
 
 - Initial development version with `msInfiniteScroll`, percentage/pixel thresholds, and completion control. This tag was not published to npm.
 
-[Unreleased]: https://github.com/HaidarZ/ng-mat-select-infinite-scroll/compare/v6.0.0...HEAD
+[Unreleased]: https://github.com/HaidarZ/ng-mat-select-infinite-scroll/compare/v6.0.1...HEAD
+[6.0.1]: https://github.com/HaidarZ/ng-mat-select-infinite-scroll/compare/v6.0.0...v6.0.1
 [6.0.0]: https://github.com/HaidarZ/ng-mat-select-infinite-scroll/compare/c1dedcbd8f380fac3bb13d39efdb1f278ff90156...v6.0.0
 [6.0.0-next.0]: https://github.com/HaidarZ/ng-mat-select-infinite-scroll/compare/v5.0.0-beta.3...c1dedcbd8f380fac3bb13d39efdb1f278ff90156
 [5.0.0]: https://github.com/HaidarZ/ng-mat-select-infinite-scroll/compare/v5.0.0-beta.3...v5.0.0
