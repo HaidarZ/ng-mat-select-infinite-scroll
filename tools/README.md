@@ -18,7 +18,7 @@ Each entry point documents its command, inputs, and file/network effects in the 
 | [browser-tests/run.mjs](browser-tests/run.mjs) | Exercise the built consumer in each import/change-detection mode. | Starts a loopback server and headless browser; writes `artifacts/browser-*.json` after success. |
 | [install-demo-library.mjs](install-demo-library.mjs) | Install the built tarball before the demo starts/builds. | Replaces the demo's installed library; runs `npm install`. |
 | [browser-tests/demo.mjs](browser-tests/demo.mjs) | Exercise the built demo's paging, search, selection, and retry. | Starts a loopback server/browser; writes `artifacts/demo.png`. |
-| [verify-release.mjs](verify-release.mjs) | Check the tarball and consumer results; optionally publish. | Default: reads only. `--publish`: can read npm metadata and publish to npm. |
+| [verify-release.mjs](verify-release.mjs) | Check the tarball and consumer results; optionally publish. | Default: reads only. `--publish`: publishes the verified tarball to npm. |
 
 For build/consumer commands and Node versions, see [CONTRIBUTING.md](../CONTRIBUTING.md) and [compat/README.md](../compat/README.md). Run configuration generation when changing the version matrix, rather than before every test.
 
@@ -44,8 +44,8 @@ The build script uses a temporary directory so imports resolve against the pinne
 | `--release-tag <tag>` | If supplied, require the exact package version, optionally prefixed with `v`. |
 | `--approved-version <version>` | Required for stable publication; must equal the package version. |
 
-## Policy choices and limits
+## Publication checks
 
-Stable publication requires an **approved version** and the validated package/consumer receipts. The [feedback record](../docs/releases/6.0.0-feedback.json) preserves the existing real-project validation; publication has no fixed waiting period or project-count requirement.
+Stable publication requires an **approved version** and the validated package/consumer receipts. The [feedback record](../docs/releases/6.0.0-feedback.json) preserves the existing real-project validation.
 
 The checker matches package hashes and recorded consumer results. Unit and demo tests run as separate jobs in [ci.yml](../.github/workflows/ci.yml). GitHub permissions control who can publish; the approval argument only checks the version string. See [npm's Trusted Publishing documentation](https://docs.npmjs.com/trusted-publishers/) for OIDC setup.

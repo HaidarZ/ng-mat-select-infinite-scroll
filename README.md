@@ -22,11 +22,11 @@ The demo renders the spinner inside the options panel while a page loads; `[load
 
 ## Version compatibility
 
-The **6.x** line supports Angular/Material **15.2–22**. It is built with Angular 15.2 partial Ivy and tested against the minimum and latest versions of each supported Angular major. See [compatibility.json](compatibility.json) for exact versions and [compat/README.md](compat/README.md) for test commands.
+**6.0.0** supports Angular/Material **15.2–22**. It is built with Angular 15.2 partial Ivy and tested against the minimum and latest versions of each supported Angular major. See [compatibility.json](compatibility.json) for exact versions and [compat/README.md](compat/README.md) for test commands.
 
 | Your application | Package |
 | --- | --- |
-| Angular/Material 15.2–22 | `6.x` |
+| Angular/Material 15.2–22 | `6.0.0` (`latest`) |
 | Angular/Material 15–16 | Existing `5.0.0-beta.3`; excludes the 6.x fixes |
 | Angular below 15 | Historical `4.0.0` declares peers `>=6 <15`; verify your exact versions |
 

@@ -1,7 +1,7 @@
 /**
  * Check an already-built tarball against current inputs and consumer receipts.
  * Usage: npm run release:check (Node 24.15); default invocation reads local files.
- * --publish runs npm publish after checks; stable publication also reads npm metadata.
+ * --publish runs npm publish after the local checks succeed.
  * --channel next|latest selects the npm tag; --release-tag checks a GitHub tag.
  * --approved-version is required for stable publication and must match the package.
  * Inputs: compatibility.json, library manifest, dist/artifact.json, and browser
