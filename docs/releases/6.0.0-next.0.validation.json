@@ -71,15 +71,17 @@
     "url": "https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43583263875"
   },
   "publication": {
-    "status": "awaiting-npm-access-after-token-retry",
+    "status": "awaiting-npm-trusted-publisher",
+    "authentication": "oidc-only",
     "published": false,
     "channel": "next",
     "validationJobs": "all passed",
     "registryError": "E404: package not found or publication access denied",
     "attempt": "https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43583272148",
-    "tokenSupplied": true,
-    "authenticationCorrection": "The first replacement workflow omitted the existing repository NPM_TOKEN secret; the token route and GitHub-release trigger are restored",
-    "nextAction": "Refresh the repository NPM_TOKEN with current package publication access or configure OIDC, then retry failed jobs in run 43583272148"
+    "historicalAttemptTokenSupplied": true,
+    "authenticationCorrection": "Historical token retry failed; the author selected Trusted Publishing only. The token fallback is removed and GitHub-release publishing is retained",
+    "trustedPublisher": "Observed in npm UI with matching repository/workflow and npm publish allowed; saving environment npm reached Security Key verification",
+    "nextAction": "Complete npm Security Key verification, verify environment npm is saved, then dispatch the OIDC-only workflow on revive/6.0 with channel next"
   },
   "knownLimitation": "Material active keyboard item can reset after append; separately characterized in browser receipts",
   "scenarios": [

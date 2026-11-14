@@ -2,6 +2,8 @@
 
 Validated locally on 14 November 2026 (macOS arm64) and in [GitHub CI on Ubuntu](https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43583263875) at commit `4ba4ee3`. All unit, consumer, demo, and release-gate jobs passed. The first publication workflow omitted the existing `NPM_TOKEN` secret. The [corrected publication attempt](https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43583272148) restores token authentication and GitHub-release publishing, repeats every validation successfully, and supplies the secret, but npm still rejects publication with `E404` (package access). The candidate remains unpublished pending npm account access.
 
+The author's subsequent decision is **Trusted Publishing only**. The stored-token fallback has been removed; configure the npm publisher using [CONTRIBUTING.md](../CONTRIBUTING.md#releases) and dispatch the current workflow. Historical token runs must not be retried.
+
 Release routing checks cover GitHub prerelease/stable events and manual beta/approved-stable runs. Mismatched release tags and prerelease/stable channels are rejected before publication.
 
 Candidate: **6.0.0-next.0**. Compiled with Angular **15.2.0** on Node **v18.19.0**.

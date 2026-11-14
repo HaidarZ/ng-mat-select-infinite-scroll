@@ -34,6 +34,7 @@ jobs:
         with:
           node-version: '24.15.0'
           registry-url: https://registry.npmjs.org/
+          package-manager-cache: false
       - uses: actions/download-artifact@v4
         with:
           name: library
@@ -54,7 +55,6 @@ jobs:
           fi
           node tools/verify-release.mjs --publish --channel "$RELEASE_CHANNEL" --approved-version "$APPROVED_VERSION" --release-tag "$RELEASE_TAG"
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           RELEASE_EVENT: ${{ github.event_name }}
           RELEASE_TAG: ${{ github.event.release.tag_name }}
           RELEASE_PRERELEASE: ${{ github.event.release.prerelease }}
