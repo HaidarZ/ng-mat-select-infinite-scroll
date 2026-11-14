@@ -51,6 +51,20 @@ Historical entries were reconstructed from tagged source and GitHub release note
 - Measure thresholds using actual panel dimensions and retain scroll position when options append.
 - Prevent failed or empty responses from causing automatic retry loops.
 
+## [5.0.0] - 2026-11-14
+
+### Changed
+
+- Stabilize the Angular/Material 15–16 maintenance line from 5.0.0-beta.3 with the same directive implementation and public API.
+- Build with Angular 15.0.0 and validate packed-library consumers across Angular/Material 15–16.
+- Document existing limitations and add compatibility tests for NgModule and standalone hosts.
+- Publish through npm Trusted Publishing under `legacy`, keeping `latest` available for 6.x.
+
+### Fixed
+
+- Replace the outdated directive-constructor test with a real Material host test.
+- Clear the build cache before packing to avoid stale source-map comments on repeated builds.
+
 ## [5.0.0-beta.3] - 2025-06-26
 
 ### Fixed
@@ -161,6 +175,7 @@ Historical entries were reconstructed from tagged source and GitHub release note
 [Unreleased]: https://github.com/HaidarZ/ng-mat-select-infinite-scroll/compare/v6.0.0...HEAD
 [6.0.0]: https://github.com/HaidarZ/ng-mat-select-infinite-scroll/compare/c1dedcbd8f380fac3bb13d39efdb1f278ff90156...v6.0.0
 [6.0.0-next.0]: https://github.com/HaidarZ/ng-mat-select-infinite-scroll/compare/v5.0.0-beta.3...c1dedcbd8f380fac3bb13d39efdb1f278ff90156
+[5.0.0]: https://github.com/HaidarZ/ng-mat-select-infinite-scroll/compare/v5.0.0-beta.3...v5.0.0
 [5.0.0-beta.3]: https://github.com/HaidarZ/ng-mat-select-infinite-scroll/compare/v5.0.0-beta.2...v5.0.0-beta.3
 [5.0.0-beta.2]: https://github.com/HaidarZ/ng-mat-select-infinite-scroll/compare/v5.0.0-beta.1...v5.0.0-beta.2
 [5.0.0-beta.1]: https://github.com/HaidarZ/ng-mat-select-infinite-scroll/compare/v4.0.0...v5.0.0-beta.1

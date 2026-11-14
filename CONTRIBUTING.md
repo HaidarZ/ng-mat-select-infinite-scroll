@@ -20,7 +20,7 @@ The [publishing workflow](.github/workflows/npmpublish.yml) runs the full compat
 
 Publishing uses npm Trusted Publishing. Its GitHub configuration is owner `HaidarZ`, repository `ng-mat-select-infinite-scroll`, workflow `npmpublish.yml`, environment `npm`, with `npm publish` allowed. See [npm's setup instructions](https://docs.npmjs.com/trusted-publishers/).
 
-The 6.x line publishes to `latest`. The separate `support/5.x` maintenance branch publishes to `legacy`.
+The 6.x line publishes to `latest`. The separate `support/5.x` maintenance branch publishes to `legacy`. Publish maintenance releases with GitHub's `--latest=false` option to preserve the mainline release as **Latest**. Keep the maintenance branch separate from `master`.
 
 For stable releases, review the tested tarball, compatibility results, and documented limitations. A manual stable run requires the exact `approved_version`; a published GitHub release supplies it through the tag.
 

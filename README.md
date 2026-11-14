@@ -29,10 +29,10 @@ The demo renders the spinner inside the options panel while a page loads; `[load
 | Your application | Package |
 | --- | --- |
 | Angular/Material 15.2–22 | `6.0.0` (`latest`) |
-| Angular/Material 15–16 (older line) | `5.0.0-beta.3` (published preview); excludes the 6.x fixes |
+| Angular/Material 15–16 (maintenance line) | `5.0.0` (`legacy`); excludes the 6.x fixes |
 | Angular below 15 | Historical `4.0.0` declares peers `>=6 <15`; verify your exact versions |
 
-The `5.0.0` maintenance candidate is not published yet.
+Install the maintenance line with `npm install ng-mat-select-infinite-scroll@5`. Its [README](https://github.com/HaidarZ/ng-mat-select-infinite-scroll/blob/support/5.x/README.md) covers the NgModule API and existing limitations.
 
 Angular and Material should use matching majors. The 6.x line uses RxJS 7.8+. Standard `MatSelect` is covered; `MatLegacySelect` is a separate integration. An older framework's compatibility entry does not extend its upstream security support.
 
