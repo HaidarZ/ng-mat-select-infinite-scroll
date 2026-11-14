@@ -16,7 +16,7 @@ Historical entries were reconstructed from tagged source and GitHub release note
 
 ### Fixed
 
-- Keep the demo loading indicator visible above the open panel and include loading in the README recordings.
+- Show a spinner inside the options panel while fetching more pages, and include it in the README recordings.
 
 ### Changed
 

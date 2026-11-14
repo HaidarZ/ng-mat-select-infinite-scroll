@@ -18,7 +18,7 @@
       @else { Open the select and scroll for more. }
     </p>
     <div class="progress">
-      @if (loading()) {
+      @if (loading() && options().length === 0) {
         <mat-progress-bar mode="indeterminate" aria-label="Loading customers"></mat-progress-bar>
       }
     </div>
@@ -42,6 +42,13 @@
         }
         @for (item of options(); track item.id) {
           <mat-option [value]="item.id">{{item.name}}</mat-option>
+        }
+        @if (loading() && options().length > 0) {
+          <!-- The live status above announces loading; this footer isn't a selectable option. -->
+          <div class="panel-loading" aria-hidden="true">
+            <mat-spinner [diameter]="18" [strokeWidth]="3"></mat-spinner>
+            <span>Loading more customers…</span>
+          </div>
         }
       </mat-select>
       <mat-hint>{{options().length}} of {{filtered().length}} loaded · {{selected().length}} selected</mat-hint>

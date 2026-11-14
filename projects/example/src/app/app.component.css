@@ -12,6 +12,7 @@ h1 { color: #182044; font-size: clamp(40px, 7vw, 64px); line-height: 1.06; lette
 .demo > label { display: block; font-weight: 600; margin-bottom: 8px; }
 #search { box-sizing: border-box; width: 100%; border: 1px solid #aeb7ce; border-radius: 6px; padding: 12px; font: inherit; margin-bottom: 24px; }
 mat-form-field { width: 100%; }
+.panel-loading { position: sticky; bottom: 0; z-index: 1; display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; background: white; border-top: 1px solid #dfe3ef; color: #566077; font-size: 14px; }
 .status { min-height: 24px; color: #566077; font-size: 14px; margin: 0 0 8px; }
 .progress { height: 4px; margin-bottom: 20px; }
 .footer, footer { display: flex; gap: 16px; justify-content: space-between; align-items: center; color: #68718b; font-size: 12px; }

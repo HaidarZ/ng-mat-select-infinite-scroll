@@ -92,6 +92,7 @@ jobs:
           path: |
             projects/example/dist/browser
             artifacts/demo.png
+            artifacts/demo-loading.png
 
   release-gate:
     needs: [consumers, demo]

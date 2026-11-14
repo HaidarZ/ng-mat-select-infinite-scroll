@@ -3,13 +3,14 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Subscription, timer } from 'rxjs';
 import { MatSelectInfiniteScrollDirective } from 'ng-mat-select-infinite-scroll';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 @Component({
   selector: 'app-root', standalone: true, changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormsModule, MatFormFieldModule, MatSelectModule, MatProgressBarModule, MatSelectInfiniteScrollDirective, NgxMatSelectSearchModule],
+  imports: [FormsModule, MatFormFieldModule, MatSelectModule, MatProgressBarModule, MatProgressSpinnerModule, MatSelectInfiniteScrollDirective, NgxMatSelectSearchModule],
   templateUrl: './app.component.html', styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnDestroy {

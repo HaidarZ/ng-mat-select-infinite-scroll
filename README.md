@@ -8,13 +8,13 @@ Load options in pages as users scroll a standard Angular Material `mat-select`. 
 
 **Load more options as you scroll**
 
-![Initial loading, scrolling to load more pages with a visible progress bar, and selecting a customer.](https://raw.githubusercontent.com/HaidarZ/ng-mat-select-infinite-scroll/42c30b6dde1eff7b3926b0ee0ac0a2ffb4ccd59f/.github/media/paging.gif)
+![Scrolling to load more pages, showing a spinner inside the options panel until each page arrives, and selecting a customer.](https://raw.githubusercontent.com/HaidarZ/ng-mat-select-infinite-scroll/b284115289d1e311f362e6cb3cd855fea5276ba4/.github/media/paging.gif)
 
 **Search while keeping your selections**
 
-![Selecting a customer, searching for another, and clearing the search with both selections retained.](https://raw.githubusercontent.com/HaidarZ/ng-mat-select-infinite-scroll/42c30b6dde1eff7b3926b0ee0ac0a2ffb4ccd59f/.github/media/search-selection.gif)
+![Filtering customers, scrolling to load more results with an in-panel spinner, and clearing the search with both selections retained.](https://raw.githubusercontent.com/HaidarZ/ng-mat-select-infinite-scroll/b284115289d1e311f362e6cb3cd855fea5276ba4/.github/media/search-selection.gif)
 
-The demo also includes loading/completion states and a simulated request failure with retry. Search and selection retention are handled by the [demo component](projects/example/src/app/app.component.ts).
+The demo renders the spinner inside the options panel while a page loads; `[loading]` prevents overlapping requests. The [demo component](projects/example/src/app/app.component.ts) also handles search, selection retention, completion, and retry.
 
 ## Version compatibility
 

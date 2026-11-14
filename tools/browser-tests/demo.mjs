@@ -65,6 +65,18 @@ try {
     await page.keyboard.press('Escape');
     await page.waitForFunction(() => !document.querySelector('[role="listbox"]'));
   };
+  /** Paging feedback must be inside the visible panel, not below its scroll viewport. */
+  const checkPagingLoader = async () => {
+    const loader = page.locator('.panel-loading');
+    await loader.waitFor();
+    const loaderBounds = await loader.boundingBox();
+    const panelBounds = await page.getByRole('listbox').boundingBox();
+    assert.ok(loaderBounds.y >= panelBounds.y, 'loader must be inside the panel');
+    assert.ok(
+      loaderBounds.y + loaderBounds.height <= panelBounds.y + panelBounds.height + 1,
+      'loader must be visible at the bottom of the panel',
+    );
+  };
   page.on('pageerror', (error) => errors.push(error.message));
   await page.goto(`http://127.0.0.1:${server.address().port}${basePath}`);
   // Load a second page and select a record before changing the query.
@@ -80,15 +92,12 @@ try {
     element.scrollTop = element.scrollHeight;
     element.dispatchEvent(new Event('scroll'));
   });
-  const progress = page.getByRole('progressbar', { name: 'Loading customers' });
-  await progress.waitFor();
-  const progressBounds = await progress.boundingBox();
-  const panelBounds = await page.getByRole('listbox').boundingBox();
-  assert.ok(
-    progressBounds.y + progressBounds.height <= panelBounds.y,
-    'panel must not cover loading',
-  );
+  await checkPagingLoader();
+  assert.equal(await page.getByRole('option').count(), 20, 'loader must not become an option');
+  await mkdir('artifacts', { recursive: true });
+  await page.screenshot({ path: 'artifacts/demo-loading.png', fullPage: true });
   await page.getByText('40 of 1000 loaded', { exact: false }).waitFor();
+  await page.locator('.panel-loading').waitFor({ state: 'detached' });
   await page.getByRole('option', { name: 'Customer 0001', exact: true }).click();
   await close();
   // Filtering and clearing a query must retain both selected records.
@@ -138,6 +147,7 @@ try {
     element.scrollTop = element.scrollHeight;
     element.dispatchEvent(new Event('scroll'));
   });
+  await checkPagingLoader();
   await page.getByText('40 of', { exact: false }).waitFor();
   await page.getByRole('option', { name: 'Customer 0021', exact: true }).click();
   await setQuery('09');
