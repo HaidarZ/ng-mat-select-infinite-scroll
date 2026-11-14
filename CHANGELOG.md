@@ -8,6 +8,8 @@ Historical entries were reconstructed from tagged source and GitHub release note
 
 ## [Unreleased]
 
+## [6.0.0] - 2026-11-14
+
 ### Added
 
 - README recordings of paging and search with retained selections.
@@ -20,6 +22,7 @@ Historical entries were reconstructed from tagged source and GitHub release note
 
 ### Changed
 
+- Promote the Angular/Material 15.2–22 line to stable, with the same directive implementation as 6.0.0-next.0.
 - Document tool commands, side effects, and directive lifecycle in source; enforce consistent formatting in CI.
 - Consolidate usage guidance and restore historical changelog entries.
 
@@ -153,7 +156,8 @@ Historical entries were reconstructed from tagged source and GitHub release note
 
 - Initial development version with `msInfiniteScroll`, percentage/pixel thresholds, and completion control. This tag was not published to npm.
 
-[Unreleased]: https://github.com/HaidarZ/ng-mat-select-infinite-scroll/compare/c1dedcbd8f380fac3bb13d39efdb1f278ff90156...HEAD
+[Unreleased]: https://github.com/HaidarZ/ng-mat-select-infinite-scroll/compare/v6.0.0...HEAD
+[6.0.0]: https://github.com/HaidarZ/ng-mat-select-infinite-scroll/compare/c1dedcbd8f380fac3bb13d39efdb1f278ff90156...v6.0.0
 [6.0.0-next.0]: https://github.com/HaidarZ/ng-mat-select-infinite-scroll/compare/v5.0.0-beta.3...c1dedcbd8f380fac3bb13d39efdb1f278ff90156
 [5.0.0-beta.3]: https://github.com/HaidarZ/ng-mat-select-infinite-scroll/compare/v5.0.0-beta.2...v5.0.0-beta.3
 [5.0.0-beta.2]: https://github.com/HaidarZ/ng-mat-select-infinite-scroll/compare/v5.0.0-beta.1...v5.0.0-beta.2

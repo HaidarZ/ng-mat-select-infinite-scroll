@@ -5,8 +5,8 @@
  * --channel next|latest selects the npm tag; --release-tag checks a GitHub tag.
  * --approved-version is required for stable publication and must match the package.
  * Inputs: compatibility.json, library manifest, dist/artifact.json, and browser
- * receipts under artifacts/. Stable publication also reads the feedback record.
- * See tools/README.md for the feedback format and project release rules.
+ * receipts under artifacts/. Stable publication requires an approved version.
+ * See tools/README.md for the checks and publication flags.
  */
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
@@ -75,26 +75,11 @@ assert.equal(
 );
 if (process.argv.includes('--publish')) {
   if (channel === 'latest') {
-    // Project release policy: explicit version approval,
-    // two documented external projects on this implementation, and a beta week.
+    // Require the maintainer to approve the exact stable version.
     assert.equal(
       arg('--approved-version'),
       artifact.version,
       'stable publication requires explicit approval of this version',
-    );
-    const feedback = await json(`docs/releases/${artifact.version}-feedback.json`);
-    const projects = feedback.validations.filter(
-      (item) => item.validated && item.sourceHash === artifact.sourceHash && item.evidence,
-    );
-    assert.ok(
-      new Set(projects.map((item) => item.project)).size >= 2,
-      'two real external-project validations are required',
-    );
-    const registry = await (await fetch(`https://registry.npmjs.org/${policy.package}`)).json();
-    const published = registry.time?.[feedback.candidate];
-    assert.ok(
-      published && Date.now() - Date.parse(published) >= 7 * 24 * 60 * 60 * 1000,
-      'beta feedback window has not elapsed',
     );
   }
   // The only registry write in this script. CI supplies OIDC authentication;

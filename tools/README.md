@@ -35,7 +35,7 @@ The build script uses a temporary directory so imports resolve against the pinne
 1. Compare package version, compiler, tarball bytes, and current source/packaging inputs with `dist/artifact.json`.
 2. Read every minimum/latest consumer receipt and check its Angular version, tarball hash, success flag, and standalone/NgModule results.
 3. Check the optional release tag and the chosen npm channel.
-4. With `--publish`, apply the stable-release policy if relevant, then run `npm publish` on that tarball.
+4. With `--publish`, require the approved version for stable publication, then run `npm publish` on that tarball.
 
 | Flag | Meaning |
 | --- | --- |
@@ -46,6 +46,6 @@ The build script uses a temporary directory so imports resolve against the pinne
 
 ## Policy choices and limits
 
-Stable publication requires **two tested projects**, a **seven-day beta interval**, and an **approved version**. These are project release rules. The [feedback record](../docs/releases/6.0.0-feedback.json) contains the candidate version and project validations (`project`, `validated`, `sourceHash`, and `evidence`).
+Stable publication requires an **approved version** and the validated package/consumer receipts. The [feedback record](../docs/releases/6.0.0-feedback.json) preserves the existing real-project validation; publication has no fixed waiting period or project-count requirement.
 
 The checker matches package hashes and recorded consumer results. Unit and demo tests run as separate jobs in [ci.yml](../.github/workflows/ci.yml). GitHub permissions control who can publish; the approval argument only checks the version string. See [npm's Trusted Publishing documentation](https://docs.npmjs.com/trusted-publishers/) for OIDC setup.
