@@ -8,7 +8,7 @@
     "develop": "ng build ng-mat-select-infinite-scroll --watch --configuration development",
     "test": "ng test ng-mat-select-infinite-scroll --watch=false --browsers=ChromeHeadless",
     "npm_pack": "npm pack ./dist/ng-mat-select-infinite-scroll --pack-destination dist",
-    "package": "npm run build && cp README.md LICENSE dist/ng-mat-select-infinite-scroll/ && npm run npm_pack"
+    "package": "ng cache clean && npm run build && cp README.md LICENSE dist/ng-mat-select-infinite-scroll/ && npm run npm_pack"
   },
   "private": true,
   "dependencies": {

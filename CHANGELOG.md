@@ -16,6 +16,7 @@ Historical entries use tagged source, GitHub release notes, and npm publication 
 ### Fixed
 
 - Replace the outdated directive-constructor test with a real Material host test.
+- Clear the build cache before packing to avoid stale source-map comments on repeated builds.
 
 ## [5.0.0-beta.3] - 2025-06-26
 
