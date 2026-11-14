@@ -27,6 +27,7 @@ jobs:
       - id: matrix
         run: node tools/check-policy.mjs --matrix
       - run: npm ci --ignore-scripts --no-audit
+      - run: npm run format:check
       - run: npm run test:unit
       - run: npm ci --prefix tools/build-library --ignore-scripts --no-audit
       - run: npm run build

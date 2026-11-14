@@ -6,11 +6,13 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { MatSelectInfiniteScrollModule } from './mat-select-infinite-scroll.module';
 
-@Component({ template: `
+@Component({
+  template: `
   <mat-select msInfiniteScroll [complete]="complete" [loading]="loading" [threshold]="threshold"
               [debounceTime]="20" (infiniteScroll)="calls = calls + 1">
     <mat-option *ngFor="let option of options" [value]="option">{{option}}</mat-option>
-  </mat-select>` })
+  </mat-select>`,
+})
 class HostComponent {
   complete = false;
   loading = false;
@@ -27,13 +29,14 @@ describe('MatSelectInfiniteScrollDirective', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [CommonModule, MatSelectModule, MatSelectInfiniteScrollModule, NoopAnimationsModule],
-      declarations: [HostComponent]
+      declarations: [HostComponent],
     });
     fixture = TestBed.createComponent(HostComponent);
     fixture.detectChanges();
     select = fixture.debugElement.query(By.directive(MatSelect)).componentInstance;
   });
 
+  /** Use fixed panel measurements so these checks do not depend on Material CSS. */
   function open() {
     select.open();
     fixture.detectChanges();
@@ -42,7 +45,7 @@ describe('MatSelectInfiniteScrollDirective', () => {
     Object.defineProperties(panel, {
       clientHeight: { configurable: true, value: 100 },
       scrollHeight: { configurable: true, value: 1000 },
-      scrollTop: { configurable: true, writable: true, value: 900 }
+      scrollTop: { configurable: true, writable: true, value: 900 },
     });
     fixture.componentInstance.calls = 0;
   }

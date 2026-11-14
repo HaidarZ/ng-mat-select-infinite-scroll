@@ -10,9 +10,10 @@
       "angular": "15.2.10",
       "material": "15.2.9",
       "validated": true,
-      "sourceHash": "8779dbc3851fe3db544e33d706fa6ff00e5ddd53e9fc27cb4979d927417d0545",
-      "evidence": "Clean npm ci, production build, and two Playwright checks passed. Local reports: artifacts/external-example-15.2/.",
-      "notes": "Maintainer-owned example tested in an isolated Angular 14 to 15.2/MDC upgrade. Original repository unchanged. Initial bundle: 542.93 kB; warning budget: 500 kB."
+      "sourceHash": "1f81449d20d77d473c67bd123a5d9588265db2011cd4438ac0f7a1f9bd3d9136",
+      "evidence": "Production build and two Playwright checks passed against the rebuilt local tarball. Reports: artifacts/external-example-15.2-formatted/.",
+      "notes": "Maintainer-owned example in an isolated Angular 15.2/MDC copy. Rechecked after formatting/documentation changes; executable syntax matches the published beta. Original repository unchanged; bundle warning remains.",
+      "artifactSha256": "23b623f4f4dbeca3f31ce8fe5f5f126ed7c96d40c8dfa78b63132bf46e5724c6"
     }
   ]
 }

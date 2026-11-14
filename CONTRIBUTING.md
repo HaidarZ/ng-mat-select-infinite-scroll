@@ -10,6 +10,8 @@ The [tooling guide](tools/README.md) explains each script and the files it chang
 4. With Node 24.15, install `tools/browser-tests`, install Playwright Chromium if needed, and run `node tools/browser-tests/run.mjs <major>`. Local checks use installed Chrome; CI uses Chromium.
 5. Add a regression test for behavior changes. Keep both standalone and NgModule imports working.
 
+Run `npm run format` for the tooling and library source. CI checks the same files with `npm run format:check`. Generated consumer configurations and lockfiles are excluded.
+
 `compatibility.json` lists supported versions and test toolchains. After changing it, run `npm run compat:generate` and update the affected lockfiles. Adding support for an Angular major is a minor library release; dropping support or raising a minimum is a major release.
 
 ## Releases

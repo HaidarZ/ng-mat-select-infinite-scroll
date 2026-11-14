@@ -14,11 +14,15 @@ describe('InfiniteScrollService', () => {
     Object.defineProperties(panel, {
       clientHeight: { configurable: true, value: 100 },
       scrollHeight: { configurable: true, value: 1000 },
-      scrollTop: { configurable: true, writable: true, value: 750 }
+      scrollTop: { configurable: true, writable: true, value: 750 },
     });
     config = { threshold: '15%', debounceTime: 20, complete: false, loading: false };
     calls = 0;
-    service.connect(panel, () => config, () => calls++);
+    service.connect(
+      panel,
+      () => config,
+      () => calls++,
+    );
   });
 
   afterEach(() => service.disconnect());
@@ -105,7 +109,11 @@ describe('InfiniteScrollService', () => {
     panel.dispatchEvent(new Event('scroll'));
     const oldPanel = panel;
     panel = document.createElement('div');
-    service.connect(panel, () => config, () => calls++);
+    service.connect(
+      panel,
+      () => config,
+      () => calls++,
+    );
     oldPanel.dispatchEvent(new Event('scroll'));
     tick(25);
     expect(calls).toBe(0);

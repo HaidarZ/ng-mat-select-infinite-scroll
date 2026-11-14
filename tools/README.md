@@ -4,6 +4,8 @@ These scripts run ng-packagr, Angular CLI, npm, and Playwright for builds, compa
 
 These scripts run during development and CI. They are not included in the published library.
 
+Each entry point documents its command, inputs, and file/network effects in the source. Run `npm run format` to apply the shared Prettier configuration; `npm run format:check` is enforced in CI. Embedded templates and generated files are left unchanged.
+
 ## Script map
 
 | Script | Purpose | Files changed / other effects |
