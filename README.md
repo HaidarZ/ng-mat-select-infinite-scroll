@@ -4,18 +4,17 @@ Load options in pages as users scroll a standard Angular Material `mat-select`. 
 
 ## Version compatibility
 
-The 6.0 release candidate targets Angular/Material **15.2–22**. It is compiled with Angular 15.2 partial Ivy and checked as one npm tarball in independent applications for every major, including minimum-version fixtures. See [compatibility.json](compatibility.json) for exact test toolchains and [the execution status](REVIVAL_STATUS.md) for validation progress. A candidate is not a published stable release.
+The **6.0.0-next.0** beta supports Angular/Material **15.2–22**. It is built with Angular 15.2 partial Ivy and tested against the minimum and latest versions of each supported Angular major. See [compatibility.json](compatibility.json) for exact versions and [compat/README.md](compat/README.md) for test commands.
 
 | Your application | Package |
 | --- | --- |
-| Angular/Material 15.2–22 | Upcoming 6.x; use `@next` only after the candidate is published |
+| Angular/Material 15.2–22 | `6.0.0-next.0` (`@next`) |
 | Angular/Material 15–16 | Existing `5.0.0-beta.3`; excludes the 6.x fixes |
 | Angular below 15 | Historical `4.0.0` declares peers `>=6 <15`; verify your exact versions |
 
 Angular and Material should use matching majors. The 6.x line uses RxJS 7.8+. Standard `MatSelect` is covered; `MatLegacySelect` is a separate integration. An older framework's compatibility entry does not extend its upstream security support.
 
 ```sh
-# Once the candidate is published:
 npm install ng-mat-select-infinite-scroll@next
 ```
 
@@ -98,7 +97,7 @@ For server search, cancel the previous query (for example with `switchMap`), res
 
 - Append options with stable IDs/identity. When clearing pages or filtering, retain the selected options separately or fetch them by ID; `compareWith` cannot recreate a removed option.
 - Keep the Material panel as the scrolling container. Arbitrary nested scrolling `div` elements are not supported. Standard options and optgroups are supported.
-- Appending pages preserves the panel's scroll position. **Material can still reset its active keyboard item to the selected option when the option list changes.** The compatibility browser checks record this upstream behavior; the library does not modify private Material key-manager fields. See [known limitations](docs/KNOWN_LIMITATIONS.md).
+- Appending pages preserves the panel's scroll position. **Material can still reset its active keyboard item to the selected option when the option list changes.** See [limitations](docs/RECIPES.md#limitations).
 
 ## Migration from 4.x / 5.x
 
@@ -126,7 +125,7 @@ npm ci --ignore-scripts
 npm start
 ```
 
-PR CI validates the actual tarball; the publishing workflow repeats the checks and uses npm trusted publishing. Stable publication requires the approved version, beta feedback, and the full matrix. See [request and selection recipes](docs/RECIPES.md) for shared caching and reset behavior.
+See [paging and selection recipes](docs/RECIPES.md) for request caching, query resets, and retained selections.
 
 Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md).
 

@@ -27,7 +27,7 @@ Run `npm run compat:generate` when changing `compatibility.json`; it overwrites 
 | Geometry | Threshold uses actual panel dimensions, supports percentage/pixel distances and fractional measurements, and rejects invalid/negative values. | #17, #34 |
 | Opening | Check a settled panel even without a scroll event; short lists can request a page, bounded by loading/completion and actual option growth. | #9, #16 |
 | Loading | Optional `loading` suppresses emissions and resumes checks on completion; the consumer owns HTTP, failure/retry, cancellation and cross-select caching. | #49 |
-| Selection | Append preserves the viewport and selected values. Material's active keyboard item can still reset; this is recorded separately in [known limitations](../docs/KNOWN_LIMITATIONS.md). Consumer recipes retain selected options during resets. | #6, #19 |
+| Selection | Append preserves the viewport and selected values. Material's [keyboard-navigation limitation](../docs/RECIPES.md#keyboard-navigation) remains. Retain selected options during resets. | #6, #19 |
 | Imports | Both standalone directive and existing NgModule work; standard MatSelect is covered, MatLegacySelect is a separate integration. | #21, #43, #62 |
 
-Browser receipts are written under ignored `artifacts/`; release validation records the artifact SHA-256. See the revival ledger for completed versus pending checks.
+Browser results are written under ignored `artifacts/`. The [CI workflow](../.github/workflows/ci.yml) runs the full matrix and checks that every result refers to the same tarball.

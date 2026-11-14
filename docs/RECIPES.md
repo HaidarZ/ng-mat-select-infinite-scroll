@@ -1,8 +1,8 @@
-# Request and selection recipes
+# Paging and selection
 
 ## Share requests between selects
 
-Issue #49 concerns several selects requesting the same page. Share an application data service, keyed by every parameter that affects the response:
+Use a shared service to cache pages and avoid duplicate HTTP requests. Include every query parameter in the cache key:
 
 ```ts
 import { Injectable } from '@angular/core';
@@ -33,16 +33,28 @@ export class Customers {
 }
 ```
 
-Concurrent subscribers share one HTTP request. Completed responses are reused; failed requests are evicted for retry. When all consumers unsubscribe before completion, the shared request can be cancelled. Invalidate when the underlying dataset/context changes and add an eviction policy if query keys can grow indefinitely. Each select still owns its own offset, completion and loading state.
+Subscribers share one request. Completed responses stay cached; failed requests can be retried. The request is cancelled if every subscriber leaves before it completes. Clear the cache when data or filters change, and limit its size for open-ended searches. Each select tracks its own offset, completion, and loading state.
 
 ## Reset a query
 
-Cancel the old subscription before resetting options/offset/completion, then request the new first page. With an observable search stream, `switchMap` can cancel the previous query and `exhaustMap` can prevent overlapping pages within that query. Retrying an error must keep the offset unchanged. Do not append an old query's late response to the new list.
+Cancel the previous request, reset options, offset, and completion, then fetch the first page. With observables, use `switchMap` for query changes and `exhaustMap` to avoid overlapping page requests. Keep the offset unchanged after an error.
 
-The [demo component](../projects/example/src/app/app.component.ts) provides a runnable cancellation/reset/retry example using a delayed data source and signals. HTTP state remains outside the scroll directive.
+See the [demo component](../projects/example/src/app/app.component.ts) for cancellation, reset, and retry handling.
 
 ## Keep selected values when replacing options
 
-Maintain selected records separately from the current page, or fetch selected IDs from the server. Render retained selected options once, excluding IDs already present in the visible page. Keep stable option IDs; use `compareWith` for object values where appropriate, while remembering that it cannot recreate a missing option.
+Keep selected records separately from the current page, or fetch them by ID. Render each selected option once, excluding records already in the page. `compareWith` can compare object values, but it cannot restore an option that has been removed.
 
-The [demo template](../projects/example/src/app/app.component.html) retains selected records across search resets. Its browser smoke test selects Customer 0001, searches for/selects Customer 1000, clears the query, and verifies that both selections remain available.
+The [demo template](../projects/example/src/app/app.component.html) retains selected options across searches.
+
+## Limitations
+
+### Keyboard navigation
+
+Material can reset the active keyboard option to the selected option when pages append. The selected value and scroll position are preserved. This behavior is tracked in [#6](https://github.com/HaidarZ/ng-mat-select-infinite-scroll/issues/6) and [#17](https://github.com/HaidarZ/ng-mat-select-infinite-scroll/issues/17).
+
+### Scroll containers and legacy components
+
+Keep the Material select panel as the scrolling container. Options and optgroups are supported; independently scrolling nested elements are not.
+
+Use `MatSelectModule`, not `MatLegacySelectModule`. When upgrading from Material 14, complete Material's MDC migration with `ng generate @angular/material:mdc-migration`.

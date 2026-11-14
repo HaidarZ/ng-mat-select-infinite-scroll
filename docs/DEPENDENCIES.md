@@ -1,19 +1,19 @@
-# Dependency assessment
+# Build dependencies
 
-Reviewed 14 November 2026. Audits describe dependency trees, not a count of exploitable defects in the directive. Full local reports are under ignored `artifacts/`.
+Audit snapshot from 14 November 2026:
 
-| Workspace | npm audit result | Disposition |
-| --- | --- | --- |
-| Angular 22 demo | 0 findings | Current separate application toolchain; application/browser smoke passes. |
-| Isolated Angular 15.2 builder | 17 findings: 0 critical, 3 high, 11 moderate, 3 low | Critical Piscina/tar findings patched with scoped overrides; remaining Angular/compiler and build-tool advisories are recorded below. |
-| Root unit-test/development workspace | 73 findings: 0 critical, 36 high, 30 moderate, 7 low | Four critical entries remediated with patched Piscina, tar, proxy-addr and websocket-driver. Older framework/CLI/transitive findings remain confined to the legacy development/test toolchain. |
+| Workspace | Critical | High | Moderate | Low |
+| --- | --- | --- | --- | --- |
+| Angular 22 demo | 0 | 0 | 0 | 0 |
+| Angular 15.2 library builder | 0 | 3 | 11 | 3 |
+| Root development and unit tests | 0 | 36 | 30 | 7 |
 
-The builder pins Sass 1.93.3 because newer Sass pulls a watcher requiring a newer Node runtime. Piscina 4.9.4 and tar 7.5.23 remove the recorded critical advisories; the floor build was rerun with these versions and produced byte-identical library output. Root overrides are also covered by the passing unit suite. These overrides concern development tools, not consumer dependency resolution.
+The builder uses Angular 15.2 to support applications on that version. Its remaining high findings concern Angular common, core, and compiler 15.2.0. Other unresolved findings affect the older development tools. Keeping these tools in a separate workspace does not fix their vulnerabilities.
 
-The three remaining high builder entries are Angular common/core/compiler 15.2.0. Raising these to a new Angular major would raise the compilation floor and remove the advertised older consumers. This compiler-only workspace builds the directive/module; it is not the demo server and its old framework is not bundled into the published package. Remaining moderate/low entries include older compiler/packager tooling. This is a documented compatibility tradeoff, not a claim that those framework versions are secure for arbitrary applications.
+Build overrides pin Piscina 4.9.4 and tar 7.5.23; root overrides also pin proxy-addr 2.0.8 and websocket-driver 0.7.5. Sass 1.93.3 keeps the builder compatible with Node 18. The package build and unit tests passed with these overrides.
 
-The published library declares Angular, Material and RxJS as peers and tslib as its only runtime dependency; it does not ship the builder, CLI, worker pool, tar extraction tools, or a copy of Angular. Each consuming application remains responsible for its framework version. Compatibility with an upstream-EOL version does not extend that framework's security support.
+The published library has Angular, Material, and RxJS as peers, and tslib as its runtime dependency. Build tools and Angular itself are not bundled. Consumers should keep their own Angular dependencies updated.
 
-Build/test jobs receive no publication credentials. The release job publishes an already validated tarball using a separate Node 24/OIDC environment. Legacy job caches are not shared with publication, and consumer build caches are disabled to prevent stale same-version tarball reuse. No audit findings are silently marked fixed by peer-range changes.
+Build and test jobs have no publishing credentials. Publication runs separately with Node 24 and npm Trusted Publishing. Re-run audits when changing dependencies or preparing a release.
 
-Relevant upstream records: [Piscina patch/advisory](https://github.com/piscinajs/piscina/security/advisories/GHSA-67c8-pqhq-4rmx), [node-tar security](https://github.com/isaacs/node-tar/security), and [Angular supported versions](https://angular.dev/reference/releases). Re-audit before publication; do not apply a forced Angular-major upgrade to this build workspace without a version-support decision.
+References: [Piscina advisory](https://github.com/piscinajs/piscina/security/advisories/GHSA-67c8-pqhq-4rmx), [node-tar security](https://github.com/isaacs/node-tar/security), [Angular support policy](https://angular.dev/reference/releases).

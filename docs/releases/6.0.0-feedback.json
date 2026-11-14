@@ -1,0 +1,18 @@
+{
+  "candidate": "6.0.0-next.0",
+  "publishedAt": "2026-11-14T10:40:43.980Z",
+  "sha256": "0e25b5c4dcc6922c3828e9a1e6676c8806ce74f7aa1fa0b736556f6745257fc6",
+  "ci": "https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43586067177",
+  "validations": [
+    {
+      "project": "https://github.com/HaidarZ/ng-mat-select-infinite-scroll-example",
+      "sourceCommit": "16ee285a38db5a35e481bdb8a0b17af75213b87a",
+      "angular": "15.2.10",
+      "material": "15.2.9",
+      "validated": true,
+      "sourceHash": "8779dbc3851fe3db544e33d706fa6ff00e5ddd53e9fc27cb4979d927417d0545",
+      "evidence": "Clean npm ci, production build, and two Playwright checks passed. Local reports: artifacts/external-example-15.2/.",
+      "notes": "Maintainer-owned example tested in an isolated Angular 14 to 15.2/MDC upgrade. Original repository unchanged. Initial bundle: 542.93 kB; warning budget: 500 kB."
+    }
+  ]
+}
