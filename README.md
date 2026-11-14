@@ -1,93 +1,65 @@
+# Angular Material Select Infinite Scroll — 5.x
 
-# Angular Material Select Infinite Scroll  
+Load pages of options as users scroll an Angular Material select. This maintenance line supports Angular/Material **15.0–16** and keeps the NgModule API from `5.0.0-beta.3`.
 
-Adds missing infinite scroll functionality for the [Angular Material Select component](https://material.angular.io/components/select).  
-
-### Inputs  
-
-| Property       | Description                                                                                                                                                                                                                  | Type      | Default    |  
-| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------| ---------- |  
-| `complete`     | If `true`, the `infiniteScroll` output will no longer be triggered.                                                                                                                                                          | `boolean` | `false`    |  
-| `threshold`    | The threshold distance from the bottom of the options list to call the `infiniteScroll` output event when scrolled. The threshold value can be either in percent or pixels. For example, `10%` triggers the event 10% before the bottom. | `string`  | `'15%'`    |  
-| `debounceTime` | The threshold time (in milliseconds) before firing the `infiniteScroll` event.                                                                                                                                               | `number`  | `150`      |  
-
-### Outputs  
-
-| Property         | Description                                                                             | Type                  |  
-| ----------------- | --------------------------------------------------------------------------------------- | --------------------- |  
-| `infiniteScroll`  | Emitted when the scroller inside the `mat-select` reaches the required distance.        | `EventEmitter<void>`  |  
-
-### Installation  
-
-```bash
-npm i ng-mat-select-infinite-scroll
+```sh
+npm install ng-mat-select-infinite-scroll@5
 ```
 
-### Usage  
+Import `MatSelectInfiniteScrollModule` alongside `MatSelectModule` and `MatFormFieldModule`. Standalone applications can include the same module in a component's `imports`.
 
-[StackBlitz working example](https://stackblitz.com/edit/ng-mat-select-infinite-scroll)  
-
-Import `MatSelectInfiniteScrollModule` inside the `app.module.ts`:  
-```typescript
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSelectInfiniteScrollModule } from 'ng-mat-select-infinite-scroll';
-
-@NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatSelectInfiniteScrollModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
-export class AppModule {}
-```
-
-Then, place the `msInfiniteScroll` directive on the `mat-select` component:  
 ```html
-<mat-form-field appearance="outline">
-  <mat-label>Select</mat-label>
-  <mat-select msInfiniteScroll (infiniteScroll)="getNextBatch()" [complete]="offset === data.length">
-    <mat-option *ngFor="let option of options$ | async" [value]="option">{{option}}</mat-option>
-  </mat-select>
-</mat-form-field>
+<mat-select msInfiniteScroll [complete]="complete" (infiniteScroll)="loadNextPage()">
+  <mat-option *ngFor="let item of options" [value]="item.id">{{ item.name }}</mat-option>
+</mat-select>
 ```
 
-> **Note:**  
-> Update the `complete` property when the loaded data reaches the total available data to avoid unnecessary scroll triggers.  
-> For older versions of Angular (<15), use version 4 of this library.
+| Input | Default | Meaning |
+| --- | --- | --- |
+| `threshold` | `'15%'` | Distance from the bottom, as a percentage or pixel string. |
+| `debounceTime` | `150` | Milliseconds to wait after scrolling. |
+| `complete` | `false` | Stops requests when set before the panel opens. |
 
-### Compatibility  
+`infiniteScroll` emits `void`. Fetch the initial page in your component and guard every subsequent request:
 
-This library supports Angular 15 and higher.  
-* `@angular/core`: `>=15.0.0 <16`  
-* `@angular/cdk`: `>=15.0.0 <16`  
-* `@angular/material`: `>=15.0.0 <16`  
-* `rxjs`: `^7.0.0`  
+```ts
+loadNextPage() {
+  if (this.loading || this.complete) return;
+  this.loading = true;
+  // Fetch and append a page; update complete and clear loading on success/error.
+}
+```
 
-### Contributions  
+## Existing limitations
 
-Contributions are welcome! Feel free to open a Pull Request or create a new issue.  
+This release preserves the beta's implementation:
 
-### Development Server  
+- `complete`, `threshold`, and `debounceTime` changes are read when the panel opens. Keep a host-side loading/completion guard, including while the panel is open.
+- Closing a panel does not cancel pending scroll work or remove its listener. Reopening can accumulate listeners until directive destruction.
+- Opening a short list does not request more automatically. Fetch the initial page yourself.
+- Appending options can reset the scroll position and Material's active keyboard item.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any source files.  
+The 6.x line fixes live inputs, close-time cleanup, and append positioning, and adds a `loading` input and direct standalone imports. Angular/Material 15.2+ applications can try `ng-mat-select-infinite-scroll@next` instead.
 
-### Build  
+## Development and release checks
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.  
+Use Node 18.19 (`nvm use`), then run `npm ci --ignore-scripts`, `npm test`, and `npm run package`. The library is built with Angular **15.0.0** in partial compilation mode.
 
-### Running Unit Tests  
+CI installs that tarball into Angular/Material **15.0.0, 15.2.10/15.2.9, 16.0.0, and 16.2.12/16.2.14** consumers. Each runs an NgModule host and a standalone host importing the NgModule. Browser tests use Node 24.15 and Playwright. Two expected-failure tests record the live-completion and pending-close limitations; they are not claimed as fixed.
 
-Run `ng test` to execute unit tests via [Karma](https://karma-runner.github.io).  
+To run one consumer locally:
 
-### License  
+```sh
+npm ci --prefix compat/angular-15 --ignore-scripts
+cp -R compat/template compat/angular-15/src
+cd compat/angular-15
+npm install ../../dist/*.tgz --no-save --package-lock=false --ignore-scripts
+npm run build
+cd ../..
+npm ci --prefix compat/browser-tests --ignore-scripts
+CONSUMER=angular-15 node compat/browser-tests/node_modules/playwright/cli.js test --config compat/browser-tests/playwright.config.mjs
+```
 
-[MIT](LICENSE)  
+The publishing workflow validates the package first and uses npm Trusted Publishing through `npmpublish.yml` and the `npm` environment. Publication requires a matching GitHub release tag or an explicitly supplied `approved_version`. Preparing this branch does not publish a version.
+
+[Changelog](CHANGELOG.md) · [MIT license](LICENSE)

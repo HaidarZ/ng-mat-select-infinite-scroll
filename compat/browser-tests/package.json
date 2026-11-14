@@ -1,0 +1,8 @@
+{
+  "name": "infinite-scroll-browser-tests",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "@playwright/test": "1.65.1"
+  }
+}

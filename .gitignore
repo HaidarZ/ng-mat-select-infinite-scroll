@@ -40,3 +40,14 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+**/node_modules/
+/compat/angular-*/src/
+/compat/angular-*/dist/
+/compat/angular-*/.angular/
+/artifacts/
+/test-results/
+/playwright-report/
+
+**/test-results/
+**/playwright-report/

@@ -1,35 +1,35 @@
 {
   "name": "ng-mat-select-infinite-scroll",
-  "version": "5.0.0-beta.3",
+  "version": "5.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build ng-mat-select-infinite-scroll",
     "develop": "ng build ng-mat-select-infinite-scroll --watch --configuration development",
-    "test": "ng test",
-    "npm_pack": "cd dist/ng-mat-select-infinite-scroll && npm pack",
-    "package": "npm run build && npm run npm_pack"
+    "test": "ng test ng-mat-select-infinite-scroll --watch=false --browsers=ChromeHeadless",
+    "npm_pack": "npm pack ./dist/ng-mat-select-infinite-scroll --pack-destination dist",
+    "package": "npm run build && cp README.md LICENSE dist/ng-mat-select-infinite-scroll/ && npm run npm_pack"
   },
-  "private": false,
+  "private": true,
   "dependencies": {
-    "@angular/animations": "^15.2.10",
-    "@angular/cdk": "~15.2.9",
-    "@angular/common": "^15.2.10",
-    "@angular/compiler": "^15.2.10",
-    "@angular/core": "^15.2.10",
-    "@angular/forms": "^15.2.10",
-    "@angular/material": "~15.2.9",
-    "@angular/platform-browser": "^15.2.10",
-    "@angular/platform-browser-dynamic": "^15.2.10",
-    "@angular/router": "^15.2.10",
+    "@angular/animations": "15.0.0",
+    "@angular/cdk": "15.0.0",
+    "@angular/common": "15.0.0",
+    "@angular/compiler": "15.0.0",
+    "@angular/core": "15.0.0",
+    "@angular/forms": "15.0.0",
+    "@angular/material": "15.0.0",
+    "@angular/platform-browser": "15.0.0",
+    "@angular/platform-browser-dynamic": "15.0.0",
+    "@angular/router": "15.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.12.0"
+    "zone.js": "~0.11.8"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^15.2.11",
-    "@angular/cli": "~15.2.11",
-    "@angular/compiler-cli": "^15.2.10",
+    "@angular-devkit/build-angular": "15.0.5",
+    "@angular/cli": "15.0.5",
+    "@angular/compiler-cli": "15.0.0",
     "@types/jasmine": "~4.3.0",
     "jasmine-core": "~4.5.0",
     "karma": "~6.4.0",
@@ -37,11 +37,18 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
-    "ng-packagr": "^15.2.2",
-    "typescript": "~4.9.4"
+    "ng-packagr": "15.0.3",
+    "typescript": "4.8.4"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/HaidarZ/ng-mat-select-infinite-scroll.git"
+  },
+  "overrides": {
+    "sass": "1.93.3",
+    "piscina": "4.9.4",
+    "tar": "7.5.23",
+    "proxy-addr": "2.0.8",
+    "websocket-driver": "0.7.5"
   }
 }
