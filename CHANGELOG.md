@@ -11,7 +11,7 @@ Historical entries use tagged source, GitHub release notes, and npm publication 
 - Prepare stable 5.0.0 from 5.0.0-beta.3 with the same directive implementation and public API.
 - Build with Angular 15.0.0 and validate packed-library consumers across Angular/Material 15–16.
 - Document existing limitations and add compatibility tests for NgModule and standalone hosts.
-- Publish through npm Trusted Publishing after validation.
+- Publish through npm Trusted Publishing under `legacy`, keeping `latest` available for 6.x.
 
 ### Fixed
 

@@ -1,6 +1,6 @@
 # Angular Material Select Infinite Scroll — 5.x
 
-Load pages of options as users scroll an Angular Material select. This maintenance line supports Angular/Material **15.0–16** and keeps the NgModule API from `5.0.0-beta.3`.
+Load pages of options as users scroll an Angular Material select. This maintenance line supports Angular/Material **15.0–16** and keeps the NgModule API from `5.0.0-beta.3`. Releases use npm’s `legacy` tag so they do not replace the current major under `latest`.
 
 ```sh
 npm install ng-mat-select-infinite-scroll@5
@@ -39,7 +39,7 @@ This release preserves the beta's implementation:
 - Opening a short list does not request more automatically. Fetch the initial page yourself.
 - Appending options can reset the scroll position and Material's active keyboard item.
 
-The 6.x line fixes live inputs, close-time cleanup, and append positioning, and adds a `loading` input and direct standalone imports. Angular/Material 15.2+ applications can try `ng-mat-select-infinite-scroll@next` instead.
+The 6.x line fixes live inputs, close-time cleanup, and append positioning, and adds a `loading` input and direct standalone imports. Angular/Material 15.2+ applications can use `ng-mat-select-infinite-scroll@6` instead.
 
 ## Development and release checks
 

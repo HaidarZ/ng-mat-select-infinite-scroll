@@ -40,7 +40,7 @@ jobs:
           test "$VERSION" = "${APPROVED_VERSION#v}"
           test "$VERSION" = 5.0.0
           test "$IS_PRERELEASE" != true
-      - run: npm publish dist/*.tgz --tag latest
+      - run: npm publish dist/*.tgz --tag legacy
     env:
       APPROVED_VERSION: ${{ github.event.release.tag_name || inputs.approved_version }}
       IS_PRERELEASE: ${{ github.event.release.prerelease }}
