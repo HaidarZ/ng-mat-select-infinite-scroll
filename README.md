@@ -2,6 +2,20 @@
 
 Load options in pages as users scroll a standard Angular Material `mat-select`. Supports standalone imports and the existing NgModule API.
 
+## Demo
+
+[Try the live demo](https://haidarz.github.io/ng-mat-select-infinite-scroll/) with 1,000 customers, twenty at a time.
+
+**Load more options as you scroll**
+
+![Opening the select, scrolling to load more pages, and selecting a customer.](https://raw.githubusercontent.com/HaidarZ/ng-mat-select-infinite-scroll/e33fe978db6d84932946866e9b09e4b131dba913/.github/media/paging.gif)
+
+**Search while keeping your selections**
+
+![Selecting a customer, searching for another, and clearing the search with both selections retained.](https://raw.githubusercontent.com/HaidarZ/ng-mat-select-infinite-scroll/e33fe978db6d84932946866e9b09e4b131dba913/.github/media/search-selection.gif)
+
+The demo also includes loading/completion states and a simulated request failure with retry. Search and selection retention are handled by the [demo component](projects/example/src/app/app.component.ts).
+
 ## Version compatibility
 
 The **6.0.0-next.0** beta supports Angular/Material **15.2–22**. It is built with Angular 15.2 partial Ivy and tested against the minimum and latest versions of each supported Angular major. See [compatibility.json](compatibility.json) for exact versions and [compat/README.md](compat/README.md) for test commands.

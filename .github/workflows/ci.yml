@@ -83,6 +83,9 @@ jobs:
       - run: npm ci --prefix tools/browser-tests --ignore-scripts --no-audit
       - run: node tools/browser-tests/node_modules/playwright/cli.js install --with-deps chromium
       - run: node tools/browser-tests/demo.mjs
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: projects/example/dist/browser
       - uses: actions/upload-artifact@v4
         with:
           name: demo
@@ -108,3 +111,22 @@ jobs:
           merge-multiple: true
           path: artifacts
       - run: node tools/verify-release.mjs
+
+  pages:
+    needs: [demo, release-gate]
+    # Preview the revival PR now; master publishes after merge.
+    if: >-
+      (github.event_name == 'push' && github.ref == 'refs/heads/master') ||
+      (github.event_name == 'pull_request' && github.head_ref == 'revive/6.0' &&
+       github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@v6
+      - uses: actions/deploy-pages@v5
+        id: deployment

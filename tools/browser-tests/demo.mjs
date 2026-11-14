@@ -1,8 +1,8 @@
 /**
  * Check the production demo's paging, search, selection, and retry UI.
  * Usage from the repository root: node tools/browser-tests/demo.mjs (Node 24.15).
- * Requires npm run build:example. Serves projects/example/dist/browser on an
- * ephemeral loopback port, using local Chrome or Playwright Chromium in CI.
+ * Requires npm run build:example. Serves projects/example/dist/browser under
+ * the GitHub Pages path on a loopback port, using Chrome or CI's Chromium.
  * Prints the result and saves artifacts/demo.png; the browser/server are closed.
  */
 import { chromium } from '@playwright/test';
@@ -12,10 +12,15 @@ import { resolve, extname, sep } from 'node:path';
 import assert from 'node:assert/strict';
 
 const dist = resolve('projects/example/dist/browser');
+const basePath = '/ng-mat-select-infinite-scroll/';
 const server = createServer(async (request, response) => {
   try {
     const pathname = new URL(request.url, 'http://localhost').pathname;
-    const file = resolve(dist, '.' + (pathname === '/' ? '/index.html' : pathname));
+    if (!pathname.startsWith(basePath)) {
+      response.writeHead(404).end();
+      return;
+    }
+    const file = resolve(dist, pathname.slice(basePath.length) || 'index.html');
     if (!file.startsWith(dist + sep)) {
       response.writeHead(403).end();
       return;
@@ -61,7 +66,7 @@ try {
     await page.waitForFunction(() => !document.querySelector('[role="listbox"]'));
   };
   page.on('pageerror', (error) => errors.push(error.message));
-  await page.goto(`http://127.0.0.1:${server.address().port}`);
+  await page.goto(`http://127.0.0.1:${server.address().port}${basePath}`);
   // Load a second page and select a record before changing the query.
   await page.getByText('20 of 1000 loaded', { exact: false }).waitFor();
   await open();
@@ -85,6 +90,12 @@ try {
   await page.getByRole('option', { name: 'Customer 1000', exact: true }).click();
   await close();
   await page.getByText('2 selected', { exact: false }).waitFor();
+  await page.getByLabel('Find a customer').fill('No matching customer');
+  await page.getByText('0 of 0 loaded', { exact: false }).waitFor();
+  await page
+    .getByRole('status')
+    .filter({ hasText: 'All matching customers are loaded.' })
+    .waitFor();
   await page.getByLabel('Find a customer').fill('');
   await page.getByText('20 of 1000 loaded', { exact: false }).waitFor();
   // A failed request should expose a retry action and keep the page offset.
@@ -102,7 +113,7 @@ try {
   await mkdir('artifacts', { recursive: true });
   await page.screenshot({ path: 'artifacts/demo.png', fullPage: true });
   console.log(
-    'Demo passed: paging, search cancellation/reset, selection retention, failure and retry.',
+    'Demo passed under the Pages path: paging, search/reset, empty results, selection retention, failure and retry.',
   );
 } finally {
   await browser.close();

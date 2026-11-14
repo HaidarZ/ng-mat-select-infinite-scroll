@@ -30,6 +30,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "./",
               "outputHashing": "all",
               "budgets": [
                 {
