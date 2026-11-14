@@ -80,6 +80,14 @@ try {
     element.scrollTop = element.scrollHeight;
     element.dispatchEvent(new Event('scroll'));
   });
+  const progress = page.getByRole('progressbar', { name: 'Loading customers' });
+  await progress.waitFor();
+  const progressBounds = await progress.boundingBox();
+  const panelBounds = await page.getByRole('listbox').boundingBox();
+  assert.ok(
+    progressBounds.y + progressBounds.height <= panelBounds.y,
+    'panel must not cover loading',
+  );
   await page.getByText('40 of 1000 loaded', { exact: false }).waitFor();
   await page.getByRole('option', { name: 'Customer 0001', exact: true }).click();
   await close();

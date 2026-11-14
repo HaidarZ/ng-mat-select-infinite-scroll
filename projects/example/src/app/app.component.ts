@@ -2,12 +2,13 @@ import { ChangeDetectionStrategy, Component, computed, OnDestroy, signal } from 
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { Subscription, timer } from 'rxjs';
 import { MatSelectInfiniteScrollDirective } from 'ng-mat-select-infinite-scroll';
 
 @Component({
   selector: 'app-root', standalone: true, changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormsModule, MatFormFieldModule, MatSelectModule, MatSelectInfiniteScrollDirective],
+  imports: [FormsModule, MatFormFieldModule, MatSelectModule, MatProgressBarModule, MatSelectInfiniteScrollDirective],
   templateUrl: './app.component.html', styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnDestroy {
@@ -41,7 +42,8 @@ export class AppComponent implements OnDestroy {
     this.error.set(false);
     this.requests.update(value => value + 1);
     const page = this.filtered().slice(this.options().length, this.options().length + 20);
-    this.request = timer(400).subscribe(() => {
+    // Simulate network latency long enough to see the demo's loading state.
+    this.request = timer(1000).subscribe(() => {
       if (this.failNext()) { this.failNext.set(false); this.error.set(true); }
       else this.options.update(options => [...options, ...page]);
       this.loading.set(false);

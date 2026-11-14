@@ -8,11 +8,11 @@ Load options in pages as users scroll a standard Angular Material `mat-select`. 
 
 **Load more options as you scroll**
 
-![Opening the select, scrolling to load more pages, and selecting a customer.](https://raw.githubusercontent.com/HaidarZ/ng-mat-select-infinite-scroll/e33fe978db6d84932946866e9b09e4b131dba913/.github/media/paging.gif)
+![Initial loading, scrolling to load more pages with a visible progress bar, and selecting a customer.](https://raw.githubusercontent.com/HaidarZ/ng-mat-select-infinite-scroll/42c30b6dde1eff7b3926b0ee0ac0a2ffb4ccd59f/.github/media/paging.gif)
 
 **Search while keeping your selections**
 
-![Selecting a customer, searching for another, and clearing the search with both selections retained.](https://raw.githubusercontent.com/HaidarZ/ng-mat-select-infinite-scroll/e33fe978db6d84932946866e9b09e4b131dba913/.github/media/search-selection.gif)
+![Selecting a customer, searching for another, and clearing the search with both selections retained.](https://raw.githubusercontent.com/HaidarZ/ng-mat-select-infinite-scroll/42c30b6dde1eff7b3926b0ee0ac0a2ffb4ccd59f/.github/media/search-selection.gif)
 
 The demo also includes loading/completion states and a simulated request failure with retry. Search and selection retention are handled by the [demo component](projects/example/src/app/app.component.ts).
 

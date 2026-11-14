@@ -13,6 +13,10 @@ Historical entries were reconstructed from tagged source and GitHub release note
 - README recordings of paging and search with retained selections.
 - GitHub Pages deployment of the tested interactive demo.
 
+### Fixed
+
+- Keep the demo loading indicator visible above the open panel and include loading in the README recordings.
+
 ### Changed
 
 - Document tool commands, side effects, and directive lifecycle in source; enforce consistent formatting in CI.

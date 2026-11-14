@@ -5,6 +5,17 @@
   <section class="demo" aria-label="Infinite scroll example">
     <label for="search">Find a customer</label>
     <input id="search" type="search" placeholder="Try 004 or 1000" [ngModel]="query()" (ngModelChange)="search($event)">
+    <p class="status" role="status">
+      @if (loading()) { Loading customers… }
+      @else if (error()) { This page failed to load. <button (click)="loadNextPage()">Retry</button> }
+      @else if (complete()) { All matching customers are loaded. }
+      @else { Open the select and scroll for more. }
+    </p>
+    <div class="progress">
+      @if (loading()) {
+        <mat-progress-bar mode="indeterminate" aria-label="Loading customers"></mat-progress-bar>
+      }
+    </div>
     <mat-form-field appearance="outline">
       <mat-label>Select customers</mat-label>
       <mat-select msInfiniteScroll multiple [value]="selected()" (selectionChange)="selected.set($event.value)"
@@ -18,12 +29,6 @@
       </mat-select>
       <mat-hint>{{options().length}} of {{filtered().length}} loaded · {{selected().length}} selected</mat-hint>
     </mat-form-field>
-    <p class="status" role="status">
-      @if (loading()) { Loading another page… }
-      @else if (error()) { This page failed to load. <button (click)="loadNextPage()">Retry</button> }
-      @else if (complete()) { All matching customers are loaded. }
-      @else { Open the select and scroll for more. }
-    </p>
     <div class="footer">
       <label class="failure"><input type="checkbox" [ngModel]="failNext()" (ngModelChange)="failNext.set($event)"> Fail the next request</label>
       <span>{{requests()}} requests</span>
