@@ -10,6 +10,8 @@ Load options in pages as users scroll a standard Angular Material `mat-select`. 
 
 [Try the live demo](https://haidarz.github.io/ng-mat-select-infinite-scroll/) with 1,000 customers, twenty at a time.
 
+[Read the guide](https://dev.to/haidarz/adding-infinite-scroll-functionality-to-angular-material-select-component-1lho) for a standalone paging example, in-panel loading, search integration, and handling saved selections.
+
 **Load more options as you scroll**
 
 ![Scrolling to load more pages, showing a spinner inside the options panel until each page arrives, and selecting a customer.](https://raw.githubusercontent.com/HaidarZ/ng-mat-select-infinite-scroll/b284115289d1e311f362e6cb3cd855fea5276ba4/.github/media/paging.gif)
@@ -27,8 +29,10 @@ The demo renders the spinner inside the options panel while a page loads; `[load
 | Your application | Package |
 | --- | --- |
 | Angular/Material 15.2–22 | `6.0.0` (`latest`) |
-| Angular/Material 15–16 | `5.x` maintenance line (`legacy`); excludes the 6.x fixes |
+| Angular/Material 15–16 (older line) | `5.0.0-beta.3` (published preview); excludes the 6.x fixes |
 | Angular below 15 | Historical `4.0.0` declares peers `>=6 <15`; verify your exact versions |
+
+The `5.0.0` maintenance candidate is not published yet.
 
 Angular and Material should use matching majors. The 6.x line uses RxJS 7.8+. Standard `MatSelect` is covered; `MatLegacySelect` is a separate integration. An older framework's compatibility entry does not extend its upstream security support.
 
