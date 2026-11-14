@@ -20,6 +20,11 @@ permissions:
 
 jobs:
   validate:
+    # The reusable workflow declares Pages permissions even when deployment is skipped.
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     uses: ./.github/workflows/ci.yml
   publish:
     needs: validate
