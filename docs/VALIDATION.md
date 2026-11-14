@@ -1,6 +1,8 @@
 # Candidate validation
 
-Validated locally on 14 November 2026 (macOS arm64) and in [GitHub CI on Ubuntu](https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43541949727) at commit `3e4d59c`. All unit, consumer, demo, and release-gate jobs passed. The [publication workflow](https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43542952173) repeated every validation successfully; only npm publication failed with `E404` (package access). The candidate remains unpublished pending verification of npm trusted-publisher access.
+Validated locally on 14 November 2026 (macOS arm64) and in [GitHub CI on Ubuntu](https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43543519244) at commit `76635b0`. All unit, consumer, demo, and release-gate jobs passed. The [first publication workflow](https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43542952173) repeated every validation successfully; only npm publication failed with `E404`. That workflow omitted the existing `NPM_TOKEN` secret. Its token authentication and GitHub-release trigger are now restored, and publication will be retried before requesting account changes.
+
+Release routing checks cover GitHub prerelease/stable events and manual beta/approved-stable runs. Mismatched release tags and prerelease/stable channels are rejected before publication.
 
 Candidate: **6.0.0-next.0**. Compiled with Angular **15.2.0** on Node **v18.19.0**.
 

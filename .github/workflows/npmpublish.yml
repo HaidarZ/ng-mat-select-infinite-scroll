@@ -1,6 +1,8 @@
 name: Publish validated package
 
 on:
+  release:
+    types: [published]
   workflow_dispatch:
     inputs:
       channel:
@@ -41,7 +43,20 @@ jobs:
           pattern: receipt-*
           merge-multiple: true
           path: artifacts
-      - run: node tools/verify-release.mjs --publish --channel "$RELEASE_CHANNEL" --approved-version "$APPROVED_VERSION"
+      - run: |
+          if [ "$RELEASE_EVENT" = release ]; then
+            APPROVED_VERSION="${RELEASE_TAG#v}"
+            if [ "$RELEASE_PRERELEASE" = true ]; then
+              RELEASE_CHANNEL=next
+            else
+              RELEASE_CHANNEL=latest
+            fi
+          fi
+          node tools/verify-release.mjs --publish --channel "$RELEASE_CHANNEL" --approved-version "$APPROVED_VERSION" --release-tag "$RELEASE_TAG"
         env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          RELEASE_EVENT: ${{ github.event_name }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          RELEASE_PRERELEASE: ${{ github.event.release.prerelease }}
           RELEASE_CHANNEL: ${{ inputs.channel }}
           APPROVED_VERSION: ${{ inputs.approved_version }}

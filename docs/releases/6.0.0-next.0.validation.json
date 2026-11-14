@@ -67,17 +67,18 @@
   "hostedCI": {
     "conclusion": "success",
     "platform": "ubuntu-latest",
-    "commit": "3e4d59c92abf7472d5d84928e7083938bf0e636a",
-    "url": "https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43541949727"
+    "commit": "76635b044a0c6a652c8baea29648e21f997259bc",
+    "url": "https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43543519244"
   },
   "publication": {
-    "status": "awaiting-npm-access",
+    "status": "retry-pending-with-existing-token",
     "published": false,
     "channel": "next",
     "validationJobs": "all passed",
     "registryError": "E404: package not found or publication access denied",
     "attempt": "https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43542952173",
-    "nextAction": "Verify npm trusted publisher: GitHub owner HaidarZ, repository ng-mat-select-infinite-scroll, workflow npmpublish.yml, environment npm, direct npm publish allowed; retry the failed publication job"
+    "authenticationCorrection": "The first replacement workflow omitted the existing repository NPM_TOKEN secret; the token route and GitHub-release trigger are restored",
+    "nextAction": "Dispatch the corrected workflow on revive/6.0 with channel next; inspect the actual token publication result before requesting account changes"
   },
   "knownLimitation": "Material active keyboard item can reset after append; separately characterized in browser receipts",
   "scenarios": [

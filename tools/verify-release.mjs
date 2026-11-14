@@ -29,6 +29,10 @@ for (const row of policy.consumers) {
   }
 }
 const arg = name => process.argv.includes(name) ? process.argv[process.argv.indexOf(name) + 1] : undefined;
+const releaseTag = arg('--release-tag');
+if (releaseTag) {
+  assert.ok([artifact.version, `v${artifact.version}`].includes(releaseTag), 'GitHub release tag must match the validated package version');
+}
 const channel = arg('--channel') || (artifact.version.includes('-') ? 'next' : 'latest');
 assert.ok(['next', 'latest'].includes(channel));
 assert.equal(channel === 'next', artifact.version.includes('-'), 'channel must match prerelease/stable version');
