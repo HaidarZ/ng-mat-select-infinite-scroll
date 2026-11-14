@@ -6,9 +6,11 @@ Historical entries use tagged source, GitHub release notes, and npm publication 
 
 ## [Unreleased]
 
+## [5.0.0] - 2026-11-14
+
 ### Changed
 
-- Prepare stable 5.0.0 from 5.0.0-beta.3 with the same directive implementation and public API.
+- Stabilize the Angular/Material 15–16 maintenance line from 5.0.0-beta.3 with the same directive implementation and public API.
 - Build with Angular 15.0.0 and validate packed-library consumers across Angular/Material 15–16.
 - Document existing limitations and add compatibility tests for NgModule and standalone hosts.
 - Publish through npm Trusted Publishing under `legacy`, keeping `latest` available for 6.x.
@@ -125,7 +127,8 @@ Historical entries use tagged source, GitHub release notes, and npm publication 
 
 - Initial development version with `msInfiniteScroll`, percentage/pixel thresholds, and completion control. This tag was not published to npm.
 
-[Unreleased]: https://github.com/HaidarZ/ng-mat-select-infinite-scroll/compare/v5.0.0-beta.3...HEAD
+[Unreleased]: https://github.com/HaidarZ/ng-mat-select-infinite-scroll/compare/v5.0.0...HEAD
+[5.0.0]: https://github.com/HaidarZ/ng-mat-select-infinite-scroll/compare/v5.0.0-beta.3...v5.0.0
 [5.0.0-beta.3]: https://github.com/HaidarZ/ng-mat-select-infinite-scroll/compare/v5.0.0-beta.2...v5.0.0-beta.3
 [5.0.0-beta.2]: https://github.com/HaidarZ/ng-mat-select-infinite-scroll/compare/v5.0.0-beta.1...v5.0.0-beta.2
 [5.0.0-beta.1]: https://github.com/HaidarZ/ng-mat-select-infinite-scroll/compare/v4.0.0...v5.0.0-beta.1
