@@ -1,16 +1,34 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }} !
-  </h1>
-  <img width="300" alt="Angular Logo"
-       src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<div class="container">
-  <mat-form-field appearance="outline">
-    <mat-label>Select</mat-label>
-    <mat-select msInfiniteScroll (infiniteScroll)="getNextBatch()" [complete]="offset === data.length" threshold="20%" [debounceTime]="100">
-      <mat-option *ngFor="let option of options$ | async" [value]="option">{{option}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-</div>
+<main>
+  <a class="project" href="https://github.com/HaidarZ/ng-mat-select-infinite-scroll">ng-mat-select-infinite-scroll ↗</a>
+  <h1>A small select.<br>A long list.</h1>
+  <p class="intro">Load options as you scroll, with Angular Material's familiar select. Try a thousand customers, twenty at a time.</p>
+  <section class="demo" aria-label="Infinite scroll example">
+    <label for="search">Find a customer</label>
+    <input id="search" type="search" placeholder="Try 004 or 1000" [ngModel]="query()" (ngModelChange)="search($event)">
+    <mat-form-field appearance="outline">
+      <mat-label>Select customers</mat-label>
+      <mat-select msInfiniteScroll multiple [value]="selected()" (selectionChange)="selected.set($event.value)"
+                  [loading]="loading()" [complete]="complete()" (infiniteScroll)="loadNextPage()">
+        @for (item of retainedSelection(); track item.id) {
+          <mat-option [value]="item.id" style="display: none">{{item.name}}</mat-option>
+        }
+        @for (item of options(); track item.id) {
+          <mat-option [value]="item.id">{{item.name}}</mat-option>
+        }
+      </mat-select>
+      <mat-hint>{{options().length}} of {{filtered().length}} loaded · {{selected().length}} selected</mat-hint>
+    </mat-form-field>
+    <p class="status" role="status">
+      @if (loading()) { Loading another page… }
+      @else if (error()) { This page failed to load. <button (click)="loadNextPage()">Retry</button> }
+      @else if (complete()) { All matching customers are loaded. }
+      @else { Open the select and scroll for more. }
+    </p>
+    <div class="footer">
+      <label class="failure"><input type="checkbox" [ngModel]="failNext()" (ngModelChange)="failNext.set($event)"> Fail the next request</label>
+      <span>{{requests()}} requests</span>
+    </div>
+  </section>
+  <p class="note">Selections stay available when you search. Loading guards prevent overlapping requests; retries stay in your control.</p>
+  <footer><a href="https://github.com/HaidarZ/ng-mat-select-infinite-scroll#readme">Usage & compatibility</a><span>MIT licensed</span></footer>
+</main>

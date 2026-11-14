@@ -1,6 +1,16 @@
-.container {
-  width: 100%;
-  height: 100%;
-  margin: 0 auto;
-  text-align: center;
-}
+:host { display: block; }
+main { max-width: 650px; margin: 0 auto; padding: 64px 24px 32px; }
+a { color: #3541a0; text-underline-offset: 4px; }
+.project { font: 600 13px ui-monospace, monospace; }
+h1 { color: #182044; font-size: clamp(40px, 7vw, 64px); line-height: 1.06; letter-spacing: -2px; margin: 32px 0 20px; }
+.intro { color: #566077; font-size: 18px; line-height: 1.6; max-width: 540px; }
+.demo { background: white; border: 1px solid #dfe3ef; border-radius: 18px; padding: 28px; margin-top: 32px; box-shadow: 0 12px 32px #17225308; }
+.demo > label { display: block; font-weight: 600; margin-bottom: 8px; }
+#search { box-sizing: border-box; width: 100%; border: 1px solid #aeb7ce; border-radius: 6px; padding: 12px; font: inherit; margin-bottom: 24px; }
+mat-form-field { width: 100%; }
+.status { min-height: 24px; color: #566077; font-size: 14px; margin: 20px 0; }
+.footer, footer { display: flex; gap: 16px; justify-content: space-between; align-items: center; color: #68718b; font-size: 12px; }
+.failure { display: flex; align-items: center; gap: 6px; }
+.note { color: #68718b; line-height: 1.6; font-size: 14px; }
+button { font: inherit; cursor: pointer; }
+footer { border-top: 1px solid #dfe3ef; padding-top: 24px; margin-top: 48px; }

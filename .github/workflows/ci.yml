@@ -1,0 +1,81 @@
+name: Validate library
+
+on:
+  pull_request:
+  push:
+    branches: [master, 'revive/**', 'support/**']
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '18.19.0'
+      - id: matrix
+        run: node tools/check-policy.mjs --matrix
+      - run: npm ci --ignore-scripts --no-audit
+      - run: npm run test:unit
+      - run: npm ci --prefix tools/build-library --ignore-scripts --no-audit
+      - run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: library
+          path: |
+            dist/*.tgz
+            dist/artifact.json
+
+  consumers:
+    needs: package
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.package.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/download-artifact@v4
+        with:
+          name: library
+          path: dist
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm ci --prefix compat/angular-${{ matrix.major }}${{ matrix.minimum && '-minimum' || '' }} --ignore-scripts --no-audit
+      - run: node tools/check-compatibility.mjs ${{ matrix.major }} ${{ matrix.minimum && '--minimum' || '' }}
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24.15.0'
+      - run: npm ci --prefix tools/browser-tests --ignore-scripts --no-audit
+      - run: node tools/browser-tests/node_modules/playwright/cli.js install --with-deps chromium
+      - run: node tools/browser-tests/run.mjs ${{ matrix.major }} ${{ matrix.minimum && '--minimum' || '' }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: receipt-${{ matrix.major }}-${{ matrix.minimum }}
+          path: artifacts/browser-*.json
+
+  release-gate:
+    needs: consumers
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24.15.0'
+      - uses: actions/download-artifact@v4
+        with:
+          name: library
+          path: dist
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: receipt-*
+          merge-multiple: true
+          path: artifacts
+      - run: node tools/verify-release.mjs

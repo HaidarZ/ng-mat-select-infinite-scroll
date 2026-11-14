@@ -1,27 +1,47 @@
-name: Node.js Package
+name: Publish validated package
 
 on:
-  release:
-    types: [published]
   workflow_dispatch:
+    inputs:
+      channel:
+        description: npm channel
+        type: choice
+        options: [next, latest]
+        default: next
+      approved_version:
+        description: Exact stable version approved for publication (latest only)
+        type: string
+        required: false
+
+permissions:
+  contents: read
 
 jobs:
-  publish-npm:
+  validate:
+    uses: ./.github/workflows/ci.yml
+  publish:
+    needs: validate
     runs-on: ubuntu-latest
+    environment: npm
+    permissions:
+      contents: read
+      id-token: write
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: '24.15.0'
           registry-url: https://registry.npmjs.org/
-      # Skip post-install scripts here, as a malicious
-      # script could steal NODE_AUTH_TOKEN.
-      - run: npm ci --ignore-scripts
-      - run: |
-          npm run build
-          cp README.md ./dist/ng-mat-select-infinite-scroll/
-          cp LICENSE ./dist/ng-mat-select-infinite-scroll/
-          cd dist/ng-mat-select-infinite-scroll && npm pack
-          npm publish
+      - uses: actions/download-artifact@v4
+        with:
+          name: library
+          path: dist
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: receipt-*
+          merge-multiple: true
+          path: artifacts
+      - run: node tools/verify-release.mjs --publish --channel "$RELEASE_CHANNEL" --approved-version "$APPROVED_VERSION"
         env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+          RELEASE_CHANNEL: ${{ inputs.channel }}
+          APPROVED_VERSION: ${{ inputs.approved_version }}

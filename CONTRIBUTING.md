@@ -1,0 +1,19 @@
+# Contributing
+
+Use Node 18.19 for the isolated Angular 15.2 library build/unit tests and Node 24.15 for browser orchestration. Do not raise the library's compiler/API floor to update a demo or test tool.
+
+1. Install root and `tools/build-library` dependencies with `npm ci --ignore-scripts`.
+2. Run `npm test`, `npm run build`, and `npm run check:policy`.
+3. For each affected consumer, use its `.nvmrc`, run `npm ci --ignore-scripts`, then `node tools/check-compatibility.mjs <major>` from the repository root. Add `--minimum` for minimum-version fixtures.
+4. With Node 24.15, install `tools/browser-tests`, install Playwright Chromium if needed, and run `node tools/browser-tests/run.mjs <major>`. Local checks use installed Chrome; CI uses Chromium.
+5. Record a reproduction and externally visible regression check for behavioral changes. Both standalone and NgModule consumers must keep working.
+
+`compatibility.json` owns tested toolchain policy. Run `npm run compat:generate` after changing it, update the corresponding lockfiles, and review all generated changes. Adding a proven Angular major is a minor library release; dropping a supported version or raising a minimum is a major release.
+
+## Releases
+
+Build/test/pack before publication; `npm run release:check` requires receipts for the exact tarball from every latest/minimum consumer. The `Publish validated package` workflow accepts `next` or `latest` explicitly and publishes the validated tarball using OIDC. Configure npm's trusted publisher for this repository, `npmpublish.yml`, and the `npm` environment; account setup is separate from code changes.
+
+Stable publishing requires the exact approved version and `docs/releases/<version>-feedback.json`, with a published beta candidate, two distinct real external-project validations (`project`, `validated`, `sourceHash`, `evidence`), and at least seven days since that candidate's registry publication. Do not fill that record with generated fixtures or assumed feedback.
+
+Retain historical install guidance. If a genuine framework boundary requires another package line, maintain a precise version table and backport relevant fixes; do not unpublish packages as a routine rollback.

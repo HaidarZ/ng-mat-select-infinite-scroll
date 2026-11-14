@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "package": "ng-mat-select-infinite-scroll",
+  "angularPeer": ">=15.2.0 <23.0.0",
+  "rxjs": "7.8.2",
+  "build": {
+    "node": "18.19.0",
+    "angular": "15.2.0",
+    "material": "15.2.0",
+    "typescript": "4.9.5",
+    "packagr": "15.2.2"
+  },
+  "consumers": [
+    {
+      "major": 15,
+      "minimum": "15.2.0",
+      "node": "18.19.0",
+      "angular": "15.2.10",
+      "material": "15.2.9",
+      "cli": "15.2.11",
+      "builder": "15.2.11",
+      "typescript": "4.9.5",
+      "zone": "0.12.0",
+      "minimumTypescript": "4.9.5"
+    },
+    {
+      "major": 16,
+      "minimum": "16.0.0",
+      "node": "18.19.0",
+      "angular": "16.2.12",
+      "material": "16.2.14",
+      "cli": "16.2.16",
+      "builder": "16.2.16",
+      "typescript": "5.1.6",
+      "zone": "0.13.3",
+      "minimumTypescript": "5.0.4"
+    },
+    {
+      "major": 17,
+      "minimum": "17.0.0",
+      "node": "18.19.0",
+      "angular": "17.3.12",
+      "material": "17.3.10",
+      "cli": "17.3.17",
+      "builder": "17.3.17",
+      "typescript": "5.4.5",
+      "zone": "0.14.10",
+      "minimumTypescript": "5.2.2"
+    },
+    {
+      "major": 18,
+      "minimum": "18.0.0",
+      "node": "22.20.0",
+      "angular": "18.2.14",
+      "material": "18.2.14",
+      "cli": "18.2.21",
+      "builder": "18.2.21",
+      "typescript": "5.5.4",
+      "zone": "0.14.10",
+      "minimumTypescript": "5.4.5"
+    },
+    {
+      "major": 19,
+      "minimum": "19.0.0",
+      "node": "22.20.0",
+      "angular": "19.2.25",
+      "material": "19.2.19",
+      "cli": "19.2.27",
+      "builder": "19.2.27",
+      "typescript": "5.8.3",
+      "zone": "0.15.1",
+      "minimumTypescript": "5.6.3"
+    },
+    {
+      "major": 20,
+      "minimum": "20.0.0",
+      "node": "24.15.0",
+      "angular": "20.3.35",
+      "material": "20.2.14",
+      "cli": "20.3.43",
+      "builder": "20.3.43",
+      "typescript": "5.9.3",
+      "zone": "0.15.1",
+      "minimumTypescript": "5.8.3"
+    },
+    {
+      "major": 21,
+      "minimum": "21.0.0",
+      "node": "24.15.0",
+      "angular": "21.2.26",
+      "material": "21.2.14",
+      "cli": "21.2.30",
+      "builder": "21.2.30",
+      "typescript": "5.9.3",
+      "zone": "0.15.1",
+      "minimumTypescript": "5.9.3"
+    },
+    {
+      "major": 22,
+      "minimum": "22.0.0",
+      "node": "24.15.0",
+      "angular": "22.2.6",
+      "material": "22.2.7",
+      "cli": "22.2.7",
+      "builder": "22.2.7",
+      "typescript": "6.0.3",
+      "zone": "0.16.0",
+      "minimumTypescript": "6.0.3"
+    }
+  ]
+}

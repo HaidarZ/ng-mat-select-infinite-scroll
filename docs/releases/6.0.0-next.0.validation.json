@@ -1,0 +1,84 @@
+{
+  "date": "2026-11-14",
+  "platform": "macOS arm64",
+  "artifact": {
+    "version": "6.0.0-next.0",
+    "file": "ng-mat-select-infinite-scroll-6.0.0-next.0.tgz",
+    "sha256": "0e25b5c4dcc6922c3828e9a1e6676c8806ce74f7aa1fa0b736556f6745257fc6",
+    "compiler": "15.2.0",
+    "node": "v18.19.0",
+    "sourceHash": "8779dbc3851fe3db544e33d706fa6ff00e5ddd53e9fc27cb4979d927417d0545",
+    "inputsHash": "0349ca755cdb9a394802a5a4bf868bae2bd45ba3392f7c5c8662dd94fc17cc2b"
+  },
+  "unitTests": 25,
+  "consumerChecks": 16,
+  "applicationBootstraps": 36,
+  "consumers": [
+    {
+      "major": 15,
+      "minimum": "15.2.0",
+      "latest": "15.2.10",
+      "passed": true
+    },
+    {
+      "major": 16,
+      "minimum": "16.0.0",
+      "latest": "16.2.12",
+      "passed": true
+    },
+    {
+      "major": 17,
+      "minimum": "17.0.0",
+      "latest": "17.3.12",
+      "passed": true
+    },
+    {
+      "major": 18,
+      "minimum": "18.0.0",
+      "latest": "18.2.14",
+      "passed": true
+    },
+    {
+      "major": 19,
+      "minimum": "19.0.0",
+      "latest": "19.2.25",
+      "passed": true
+    },
+    {
+      "major": 20,
+      "minimum": "20.0.0",
+      "latest": "20.3.35",
+      "passed": true
+    },
+    {
+      "major": 21,
+      "minimum": "21.0.0",
+      "latest": "21.2.26",
+      "passed": true
+    },
+    {
+      "major": 22,
+      "minimum": "22.0.0",
+      "latest": "22.2.6",
+      "passed": true
+    }
+  ],
+  "demo": "production build and paging/search/selection/retry smoke passed",
+  "hostedCI": "pending",
+  "knownLimitation": "Material active keyboard item can reset after append; separately characterized in browser receipts",
+  "scenarios": [
+    "paging",
+    "scroll-position",
+    "loading",
+    "complete",
+    "reopen",
+    "preselection",
+    "issue-16-sequence",
+    "custom-density",
+    "grouped-options",
+    "retry",
+    "short-list",
+    "multiple-selection",
+    "keyboard-paging"
+  ]
+}

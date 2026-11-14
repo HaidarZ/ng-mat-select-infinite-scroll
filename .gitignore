@@ -8,6 +8,16 @@
 
 # Node
 /node_modules
+**/node_modules/
+/tools/build-library/.stage/
+/compat/angular-*/src/
+/compat/angular-*/dist/
+/compat/angular-*/.angular/
+/test-results/
+/playwright-report/
+/artifacts/
+/projects/example/dist/
+/projects/example/.angular/
 npm-debug.log
 yarn-error.log
 
