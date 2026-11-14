@@ -1,5 +1,9 @@
 # Angular Material Select Infinite Scroll
 
+[![npm version](https://img.shields.io/npm/v/ng-mat-select-infinite-scroll.svg?style=flat-square)](https://www.npmjs.com/package/ng-mat-select-infinite-scroll)
+[![npm downloads per month](https://img.shields.io/npm/dm/ng-mat-select-infinite-scroll.svg?style=flat-square)](https://www.npmjs.com/package/ng-mat-select-infinite-scroll)
+[![CI status](https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/workflows/ci.yml/badge.svg)](https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/workflows/ci.yml)
+
 Load options in pages as users scroll a standard Angular Material `mat-select`. Supports standalone imports and the existing NgModule API.
 
 ## Demo
