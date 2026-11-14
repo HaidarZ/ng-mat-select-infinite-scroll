@@ -67,18 +67,19 @@
   "hostedCI": {
     "conclusion": "success",
     "platform": "ubuntu-latest",
-    "commit": "76635b044a0c6a652c8baea29648e21f997259bc",
-    "url": "https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43543519244"
+    "commit": "4ba4ee3ad04bbc6e2862d5c4bb4e0b3282a4ff2a",
+    "url": "https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43583263875"
   },
   "publication": {
-    "status": "retry-pending-with-existing-token",
+    "status": "awaiting-npm-access-after-token-retry",
     "published": false,
     "channel": "next",
     "validationJobs": "all passed",
     "registryError": "E404: package not found or publication access denied",
-    "attempt": "https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43542952173",
+    "attempt": "https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43583272148",
+    "tokenSupplied": true,
     "authenticationCorrection": "The first replacement workflow omitted the existing repository NPM_TOKEN secret; the token route and GitHub-release trigger are restored",
-    "nextAction": "Dispatch the corrected workflow on revive/6.0 with channel next; inspect the actual token publication result before requesting account changes"
+    "nextAction": "Refresh the repository NPM_TOKEN with current package publication access or configure OIDC, then retry failed jobs in run 43583272148"
   },
   "knownLimitation": "Material active keyboard item can reset after append; separately characterized in browser receipts",
   "scenarios": [

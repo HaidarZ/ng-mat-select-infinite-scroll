@@ -1,6 +1,6 @@
 # Candidate validation
 
-Validated locally on 14 November 2026 (macOS arm64) and in [GitHub CI on Ubuntu](https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43543519244) at commit `76635b0`. All unit, consumer, demo, and release-gate jobs passed. The [first publication workflow](https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43542952173) repeated every validation successfully; only npm publication failed with `E404`. That workflow omitted the existing `NPM_TOKEN` secret. Its token authentication and GitHub-release trigger are now restored, and publication will be retried before requesting account changes.
+Validated locally on 14 November 2026 (macOS arm64) and in [GitHub CI on Ubuntu](https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43583263875) at commit `4ba4ee3`. All unit, consumer, demo, and release-gate jobs passed. The first publication workflow omitted the existing `NPM_TOKEN` secret. The [corrected publication attempt](https://github.com/HaidarZ/ng-mat-select-infinite-scroll/actions/runs/43583272148) restores token authentication and GitHub-release publishing, repeats every validation successfully, and supplies the secret, but npm still rejects publication with `E404` (package access). The candidate remains unpublished pending npm account access.
 
 Release routing checks cover GitHub prerelease/stable events and manual beta/approved-stable runs. Mismatched release tags and prerelease/stable channels are rejected before publication.
 
