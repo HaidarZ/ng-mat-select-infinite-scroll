@@ -27,7 +27,7 @@ The demo renders the spinner inside the options panel while a page loads; `[load
 | Your application | Package |
 | --- | --- |
 | Angular/Material 15.2–22 | `6.0.0` (`latest`) |
-| Angular/Material 15–16 | Existing `5.0.0-beta.3`; excludes the 6.x fixes |
+| Angular/Material 15–16 | `5.x` maintenance line (`legacy`); excludes the 6.x fixes |
 | Angular below 15 | Historical `4.0.0` declares peers `>=6 <15`; verify your exact versions |
 
 Angular and Material should use matching majors. The 6.x line uses RxJS 7.8+. Standard `MatSelect` is covered; `MatLegacySelect` is a separate integration. An older framework's compatibility entry does not extend its upstream security support.
