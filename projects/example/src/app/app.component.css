@@ -4,6 +4,10 @@ a { color: #3541a0; text-underline-offset: 4px; }
 .project { font: 600 13px ui-monospace, monospace; }
 h1 { color: #182044; font-size: clamp(40px, 7vw, 64px); line-height: 1.06; letter-spacing: -2px; margin: 32px 0 20px; }
 .intro { color: #566077; font-size: 18px; line-height: 1.6; max-width: 540px; }
+.examples { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+.examples button { padding: 8px 12px; border: 1px solid #aeb7ce; border-radius: 6px; background: white; color: #3541a0; }
+.examples button[aria-pressed="true"] { background: #3541a0; color: white; border-color: #3541a0; }
+.search-clear { font-size: 24px; line-height: 24px; }
 .demo { background: white; border: 1px solid #dfe3ef; border-radius: 18px; padding: 28px; margin-top: 32px; box-shadow: 0 12px 32px #17225308; }
 .demo > label { display: block; font-weight: 600; margin-bottom: 8px; }
 #search { box-sizing: border-box; width: 100%; border: 1px solid #aeb7ce; border-radius: 6px; padding: 12px; font: inherit; margin-bottom: 24px; }

@@ -117,11 +117,43 @@ try {
   await close();
   await page.getByRole('button', { name: 'Retry', exact: true }).click();
   await page.getByText('40 of 1000 loaded', { exact: false }).waitFor();
+  // The optional search component supplies the input; this app resets/cancels
+  // queries, while msInfiniteScroll continues to request the filtered pages.
+  await page.getByRole('button', { name: 'ngx-mat-select-search', exact: true }).click();
+  await page.getByText('20 of 1000 loaded', { exact: false }).waitFor();
+  await open();
+  const search = page.getByLabel('Find a customer');
+  // The search option is aria-disabled to prevent selection, but its native
+  // input is editable. Use the same focused keyboard input as a user.
+  const setQuery = async (value) => {
+    await search.press('ControlOrMeta+A');
+    await search.pressSequentially(value);
+  };
+  await setQuery('00');
+  await page.getByRole('progressbar', { name: 'Loading customers' }).waitFor();
+  await page.waitForFunction(() =>
+    document.querySelector('mat-hint')?.textContent.includes('20 of'),
+  );
+  await page.getByRole('listbox').evaluate((element) => {
+    element.scrollTop = element.scrollHeight;
+    element.dispatchEvent(new Event('scroll'));
+  });
+  await page.getByText('40 of', { exact: false }).waitFor();
+  await page.getByRole('option', { name: 'Customer 0021', exact: true }).click();
+  await setQuery('09');
+  await page.getByRole('progressbar', { name: 'Loading customers' }).waitFor();
+  await setQuery('1000');
+  await page.getByText('1 of 1 loaded', { exact: false }).waitFor();
+  await page.getByRole('option', { name: 'Customer 1000', exact: true }).waitFor();
+  assert.equal(await page.getByRole('option', { name: 'Customer 0901', exact: true }).count(), 0);
+  await close();
+  await page.getByText('3 selected', { exact: false }).waitFor();
+  await open();
   assert.deepEqual(errors, []);
   await mkdir('artifacts', { recursive: true });
   await page.screenshot({ path: 'artifacts/demo.png', fullPage: true });
   console.log(
-    'Demo passed under the Pages path: paging, search/reset, empty results, selection retention, failure and retry.',
+    'Demo passed under the Pages path: paging, loading, search/reset, empty results, selection retention, failure/retry, and ngx-mat-select-search integration.',
   );
 } finally {
   await browser.close();

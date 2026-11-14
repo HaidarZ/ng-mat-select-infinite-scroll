@@ -107,6 +107,30 @@ Import `finalize` from RxJS. In a zoneless/OnPush component, use signals or mark
 
 For server search, cancel the previous query (for example with `switchMap`), reset options/page/completion, and request the new first page. Search inputs can live outside `mat-select`; this directive does not implement filtering. For repeated selects in a FormArray, share a data-service cache keyed by query/filter/page and deduplicate in-flight requests there.
 
+## With ngx-mat-select-search
+
+[`ngx-mat-select-search`](https://github.com/bithost-gmbh/ngx-mat-select-search) adds a search input inside the panel; `msInfiniteScroll` requests more pages. Try the **ngx-mat-select-search** example in the [live demo](https://haidarz.github.io/ng-mat-select-infinite-scroll/), or see its [component](projects/example/src/app/app.component.ts) and [template](projects/example/src/app/app.component.html).
+
+Import `FormsModule` and `NgxMatSelectSearchModule` alongside the Material modules and this directive. Connect the search input to your existing page controller:
+
+```html
+<mat-select msInfiniteScroll multiple [loading]="loading" [complete]="complete"
+            (infiniteScroll)="loadNextPage()">
+  <mat-option>
+    <ngx-mat-select-search [ngModel]="query" (ngModelChange)="search($event)"
+      [searching]="loading" [clearSearchInput]="false"
+      [disableScrollToActiveOnOptionsChanged]="true"
+      placeholderLabel="Find a customer" noEntriesFoundLabel="No matching customers">
+    </ngx-mat-select-search>
+  </mat-option>
+  <mat-option *ngFor="let item of options" [value]="item.id">{{ item.name }}</mat-option>
+</mat-select>
+```
+
+For each new query, cancel the previous request, reset pages/completion and the panel's scroll position, then fetch page one. Append later pages for that same query. Retain selected options when replacing results, as shown in the demo. `[clearSearchInput]="false"` keeps the query on close; `disableScrollToActiveOnOptionsChanged` prevents the search component scrolling to the active option during appends.
+
+The demo tests `ngx-mat-select-search` **9.0.0** with Angular 22. Its current peer range is Angular Material **17–22**; Angular 15/16 applications need an older compatible version, such as **7.0.10**. Check the upstream [compatibility table](https://github.com/bithost-gmbh/ngx-mat-select-search#compatibility) before installing. This integration is optional; the library does not depend on the search package.
+
 ## Selection and layout
 
 - Append options with stable IDs/identity. When clearing pages or filtering, retain the selected options separately or fetch them by ID; `compareWith` cannot recreate a removed option.

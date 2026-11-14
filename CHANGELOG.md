@@ -11,6 +11,7 @@ Historical entries were reconstructed from tagged source and GitHub release note
 ### Added
 
 - README recordings of paging and search with retained selections.
+- Optional ngx-mat-select-search demo and integration example.
 - GitHub Pages deployment of the tested interactive demo.
 
 ### Fixed

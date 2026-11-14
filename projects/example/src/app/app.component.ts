@@ -1,19 +1,22 @@
-import { ChangeDetectionStrategy, Component, computed, OnDestroy, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, OnDestroy, signal, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { Subscription, timer } from 'rxjs';
 import { MatSelectInfiniteScrollDirective } from 'ng-mat-select-infinite-scroll';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 @Component({
   selector: 'app-root', standalone: true, changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormsModule, MatFormFieldModule, MatSelectModule, MatProgressBarModule, MatSelectInfiniteScrollDirective],
+  imports: [FormsModule, MatFormFieldModule, MatSelectModule, MatProgressBarModule, MatSelectInfiniteScrollDirective, NgxMatSelectSearchModule],
   templateUrl: './app.component.html', styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnDestroy {
   private readonly catalog = Array.from({ length: 1000 }, (_, id) => ({ id, name: `Customer ${String(id + 1).padStart(4, '0')}` }));
   private request?: Subscription;
+  @ViewChild(MatSelect) private matSelect?: MatSelect;
+  readonly inPanelSearch = signal(false);
   readonly query = signal('');
   readonly options = signal<Array<{ id: number; name: string }>>([]);
   readonly selected = signal<number[]>([]);
@@ -33,7 +36,14 @@ export class AppComponent implements OnDestroy {
     this.options.set([]);
     this.loading.set(false);
     this.error.set(false);
+    // A new query starts at the top; appended pages keep their current position.
+    this.matSelect?.panel?.nativeElement.scrollTo({ top: 0 });
     this.loadNextPage();
+  }
+
+  changeSearchMode(inPanel: boolean): void {
+    this.inPanelSearch.set(inPanel);
+    this.search('');
   }
 
   loadNextPage(): void {

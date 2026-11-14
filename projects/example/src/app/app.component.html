@@ -2,9 +2,15 @@
   <a class="project" href="https://github.com/HaidarZ/ng-mat-select-infinite-scroll">ng-mat-select-infinite-scroll ↗</a>
   <h1>A small select.<br>A long list.</h1>
   <p class="intro">Load options as you scroll, with Angular Material's familiar select. Try a thousand customers, twenty at a time.</p>
+  <nav class="examples" aria-label="Search examples">
+    <button type="button" [attr.aria-pressed]="!inPanelSearch()" (click)="changeSearchMode(false)">External search</button>
+    <button type="button" [attr.aria-pressed]="inPanelSearch()" (click)="changeSearchMode(true)">ngx-mat-select-search</button>
+  </nav>
   <section class="demo" aria-label="Infinite scroll example">
-    <label for="search">Find a customer</label>
-    <input id="search" type="search" placeholder="Try 004 or 1000" [ngModel]="query()" (ngModelChange)="search($event)">
+    @if (!inPanelSearch()) {
+      <label for="search">Find a customer</label>
+      <input id="search" type="search" placeholder="Try 004 or 1000" [ngModel]="query()" (ngModelChange)="search($event)">
+    }
     <p class="status" role="status">
       @if (loading()) { Loading customers… }
       @else if (error()) { This page failed to load. <button (click)="loadNextPage()">Retry</button> }
@@ -20,6 +26,17 @@
       <mat-label>Select customers</mat-label>
       <mat-select msInfiniteScroll multiple [value]="selected()" (selectionChange)="selected.set($event.value)"
                   [loading]="loading()" [complete]="complete()" (infiniteScroll)="loadNextPage()">
+        @if (inPanelSearch()) {
+          <mat-option>
+            <ngx-mat-select-search [ngModel]="query()" (ngModelChange)="search($event)"
+              [searching]="loading()" [clearSearchInput]="false"
+              [disableScrollToActiveOnOptionsChanged]="true"
+              placeholderLabel="Find a customer" ariaLabel="Find a customer"
+              [noEntriesFoundLabel]="loading() ? '' : 'No matching customers'">
+              <span ngxMatSelectSearchClear class="search-clear" aria-hidden="true">×</span>
+            </ngx-mat-select-search>
+          </mat-option>
+        }
         @for (item of retainedSelection(); track item.id) {
           <mat-option [value]="item.id" style="display: none">{{item.name}}</mat-option>
         }
@@ -35,5 +52,8 @@
     </div>
   </section>
   <p class="note">Selections stay available when you search. Loading guards prevent overlapping requests; retries stay in your control.</p>
+  @if (inPanelSearch()) {
+    <p class="note">Search input by <a href="https://github.com/bithost-gmbh/ngx-mat-select-search">ngx-mat-select-search</a>; paging by ng-mat-select-infinite-scroll.</p>
+  }
   <footer><a href="https://github.com/HaidarZ/ng-mat-select-infinite-scroll#readme">Usage & compatibility</a><span>MIT licensed</span></footer>
 </main>
