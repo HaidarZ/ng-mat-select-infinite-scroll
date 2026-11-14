@@ -149,4 +149,50 @@ describe('MatSelectInfiniteScrollDirective', () => {
     tick();
     expect(panel.scrollTop).toBe(0);
   }));
+
+  it('checks a same-count replacement without toggling completion', fakeAsync(() => {
+    open();
+    Object.defineProperty(panel, 'scrollHeight', { configurable: true, value: 100 });
+    panel.scrollTop = 0;
+    panel.dispatchEvent(new Event('scroll'));
+    tick(25);
+    expect(fixture.componentInstance.calls).toBe(1);
+
+    fixture.componentInstance.loading = true;
+    fixture.componentInstance.options = Array.from({ length: 20 }, (_, i) => i + 100);
+    fixture.detectChanges();
+    tick();
+    expect(fixture.componentInstance.calls).toBe(1);
+    fixture.componentInstance.loading = false;
+    fixture.detectChanges();
+    tick();
+    expect(fixture.componentInstance.calls).toBe(2);
+    expect(fixture.componentInstance.complete).toBe(false);
+  }));
+
+  it('does not automatically retry when a request leaves the options unchanged', fakeAsync(() => {
+    open();
+    panel.dispatchEvent(new Event('scroll'));
+    tick(25);
+    expect(fixture.componentInstance.calls).toBe(1);
+
+    fixture.componentInstance.loading = true;
+    fixture.detectChanges();
+    tick();
+    fixture.componentInstance.loading = false;
+    fixture.detectChanges();
+    tick();
+    expect(fixture.componentInstance.calls).toBe(1);
+  }));
+
+  it('discards a pending append anchor when the options are replaced', fakeAsync(() => {
+    open();
+    fixture.componentInstance.options = Array.from({ length: 30 }, (_, i) => i);
+    fixture.detectChanges();
+    fixture.componentInstance.options = Array.from({ length: 30 }, (_, i) => i + 100);
+    fixture.detectChanges();
+    panel.scrollTop = 0;
+    tick();
+    expect(panel.scrollTop).toBe(0);
+  }));
 });

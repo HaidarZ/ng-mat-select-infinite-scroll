@@ -19,10 +19,12 @@ Historical entries were reconstructed from tagged source and GitHub release note
 ### Fixed
 
 - Show a spinner inside the options panel while fetching more pages, and include it in the README recordings.
+- Reset automatic requests for replacement options with the same count, and discard a pending append scroll anchor when the query changes.
+- Include the full compatibility policy and builder manifest in release fingerprints; check every generated consumer dependency and its lockfile against the policy.
 
 ### Changed
 
-- Promote the Angular/Material 15.2–22 line to stable, with the same directive implementation as 6.0.0-next.0.
+- Promote the Angular/Material 15.2–22 line to stable.
 - Document tool commands, side effects, and directive lifecycle in source; enforce consistent formatting in CI.
 - Consolidate usage guidance and restore historical changelog entries.
 

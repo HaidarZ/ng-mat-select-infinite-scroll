@@ -13,7 +13,7 @@ Each entry point documents its command, inputs, and file/network effects in the 
 | [build-library/build.mjs](build-library/build.mjs) | Build with the pinned Angular 15.2 compiler, then run `npm pack`. | Replaces the ignored build staging directory; writes `dist/`, the tarball, and `dist/artifact.json`. |
 | [library-inputs.mjs](library-inputs.mjs) | Calculate fingerprints used by the builder and release checker. | Reads source/build inputs; returns hashes. |
 | [generate-consumers.mjs](generate-consumers.mjs) | Generate each Angular version's consumer configuration from `compatibility.json`. | Overwrites fixture manifests, Angular/TypeScript configuration, and `.nvmrc` files. Does not generate lockfiles. |
-| [check-policy.mjs](check-policy.mjs) | Check that manifests match the compatibility configuration. | Normally reads only. `--matrix` also writes the job matrix to `GITHUB_OUTPUT` in CI. |
+| [check-policy.mjs](check-policy.mjs) | Check manifests, consumer lockfiles, and Node pins against the compatibility configuration. | Normally reads only. `--matrix` also writes the job matrix to `GITHUB_OUTPUT` in CI. |
 | [check-compatibility.mjs](check-compatibility.mjs) | Prepare one consumer, install the local tarball, and build with Angular CLI. | Replaces generated fixture source/build/cache and the installed library; runs `npm install`. |
 | [browser-tests/run.mjs](browser-tests/run.mjs) | Exercise the built consumer in each import/change-detection mode. | Starts a loopback server and headless browser; writes `artifacts/browser-*.json` after success. |
 | [install-demo-library.mjs](install-demo-library.mjs) | Install the built tarball before the demo starts/builds. | Replaces the demo's installed library; runs `npm install`. |
@@ -32,7 +32,7 @@ The build script uses a temporary directory so imports resolve against the pinne
 
 `npm run release:check` checks existing output. It does not build, run tests, or publish. Its order is:
 
-1. Compare package version, compiler, tarball bytes, and current source/packaging inputs with `dist/artifact.json`.
+1. Compare package version, compiler, tarball bytes, and current source/packaging inputs, including the full compatibility policy and builder manifest/lockfile, with `dist/artifact.json`.
 2. Read every minimum/latest consumer receipt and check its Angular version, tarball hash, success flag, and standalone/NgModule results.
 3. Check the optional release tag and the chosen npm channel.
 4. With `--publish`, require the approved version for stable publication, then run `npm publish` on that tarball.

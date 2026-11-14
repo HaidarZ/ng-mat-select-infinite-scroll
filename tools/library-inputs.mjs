@@ -7,8 +7,8 @@ import { join, relative } from 'node:path';
  * Fingerprint a checkout's build inputs without writing files.
  *
  * sourceHash covers production TypeScript and the pinned compiler/build policy.
- * inputsHash also covers package metadata, assets, and the builder's script,
- * manifest, and lockfile, including dependencies and overrides.
+ * inputsHash also covers the full compatibility policy, package metadata,
+ * assets, and the builder's script, manifest, and lockfile.
  * These are byte hashes: source comments and formatting affect sourceHash too.
  * Tests are excluded because they are not part of the published implementation.
  *
@@ -39,6 +39,7 @@ export async function libraryInputs(root) {
   const sourceHash = source.digest('hex');
   const inputs = createHash('sha256').update(sourceHash);
   for (const file of [
+    'compatibility.json',
     'README.md',
     'LICENSE',
     'projects/ng-mat-select-infinite-scroll/package.json',

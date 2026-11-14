@@ -1,7 +1,8 @@
 /**
  * Check workspace, library, builder, and consumer versions against compatibility.json.
  * Usage: npm run check:policy; add -- --matrix to emit the CI job matrix.
- * Reads manifests only, except --matrix appends to GITHUB_OUTPUT when CI provides it.
+ * Reads manifests, consumer lockfiles, and Node pins. --matrix appends to
+ * GITHUB_OUTPUT when CI provides it; other invocations do not write files.
  * It checks configuration consistency; builds/browser tests establish compatibility.
  */
 import { appendFile, readFile } from 'node:fs/promises';
@@ -27,15 +28,54 @@ const matrix = [];
 // The declared range includes both the minimum and latest tested version per major.
 for (const row of policy.consumers) {
   for (const minimum of [false, true]) {
-    const fixture = await json(
-      `compat/angular-${row.major}${minimum ? '-minimum' : ''}/package.json`,
-    );
-    assert.equal(fixture.dependencies['@angular/core'], minimum ? row.minimum : row.angular);
-    assert.equal(fixture.dependencies['@angular/material'], minimum ? row.minimum : row.material);
-    assert.equal(
-      fixture.devDependencies.typescript,
-      minimum ? row.minimumTypescript : row.typescript,
-    );
+    const directory = `compat/angular-${row.major}${minimum ? '-minimum' : ''}`;
+    const fixture = await json(`${directory}/package.json`);
+    const lock = await json(`${directory}/package-lock.json`);
+    const angular = minimum ? row.minimum : row.angular;
+    const material = minimum ? row.minimum : row.material;
+    const expected = {
+      dependencies: {
+        ...Object.fromEntries(
+          [
+            'animations',
+            'common',
+            'compiler',
+            'core',
+            'forms',
+            'platform-browser',
+            'platform-browser-dynamic',
+          ].map((name) => [`@angular/${name}`, angular]),
+        ),
+        '@angular/material': material,
+        '@angular/cdk': material,
+        rxjs: policy.rxjs,
+        tslib: '2.8.1',
+        'zone.js': row.zone,
+      },
+      devDependencies: {
+        '@angular/cli': minimum ? row.minimum : row.cli,
+        '@angular-devkit/build-angular': minimum ? row.minimum : row.builder,
+        '@angular/compiler-cli': angular,
+        typescript: minimum ? row.minimumTypescript : row.typescript,
+      },
+    };
+    // Check every generated pin, the lock's manifest, and its resolved versions.
+    for (const section of ['dependencies', 'devDependencies']) {
+      assert.deepEqual(fixture[section], expected[section], `${directory}: ${section} drift`);
+      assert.deepEqual(
+        lock.packages[''][section],
+        expected[section],
+        `${directory}: stale lockfile`,
+      );
+      for (const [name, version] of Object.entries(expected[section])) {
+        assert.equal(
+          lock.packages[`node_modules/${name}`]?.version,
+          version,
+          `${directory}: locked ${name}`,
+        );
+      }
+    }
+    assert.equal((await readFile(join(root, directory, '.nvmrc'), 'utf8')).trim(), row.node);
     assert.ok(
       !fixture.dependencies[policy.package],
       'tarball is installed after framework dependencies',

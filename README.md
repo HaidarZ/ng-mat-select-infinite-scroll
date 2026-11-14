@@ -84,7 +84,7 @@ For NgModule applications, import `MatSelectInfiniteScrollModule` alongside `Mat
 
 `(infiniteScroll)` emits `void` when more options are needed. Inputs remain live while open. Invalid thresholds and non-finite/negative debounce values throw `RangeError`.
 
-The directive checks the rendered panel on opening, after option changes, and when loading/completion inputs change. This allows a preselected last item or a short page to request more without another scroll. Automatic requests are bounded by changes to the rendered list; a failed or empty response does not cause an automatic retry loop. User scrolling can request again. Close/destroy cancels pending work.
+The directive checks the rendered panel on opening, after option changes, and when loading/completion inputs change. This allows a preselected last item or a short page to request more without another scroll. Replacing options resets the automatic-request guard, even if the new list has the same length. Automatic requests are bounded by changes to the rendered list; a failed or empty response does not cause an automatic retry loop. User scrolling can request again. Close/destroy cancels pending work.
 
 ## Loading pages safely
 

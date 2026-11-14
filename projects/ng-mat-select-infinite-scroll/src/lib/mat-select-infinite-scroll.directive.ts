@@ -103,6 +103,10 @@ export class MatSelectInfiniteScrollDirective implements AfterViewInit, OnChange
           this.matSelect.options.get(this.optionCount - 1) === this.lastOption
         ) {
           this.scrollAnchor = this.matSelect.panel?.nativeElement.scrollTop;
+        } else {
+          // Replacements can have the same count/geometry as the old query.
+          this.scrollAnchor = undefined;
+          this.scroll.reset();
         }
         this.optionCount = count;
         this.lastOption = this.matSelect.options.last;
