@@ -2,6 +2,8 @@
 
 Use Node 18.19 for the isolated Angular 15.2 library build/unit tests and Node 24.15 for browser orchestration. Do not raise the library's compiler/API floor to update a demo or test tool.
 
+See [the maintainer tooling guide](tools/README.md) for each custom script's purpose, side effects, and release-policy assumptions.
+
 1. Install root and `tools/build-library` dependencies with `npm ci --ignore-scripts`.
 2. Run `npm test`, `npm run build`, and `npm run check:policy`.
 3. For each affected consumer, use its `.nvmrc`, run `npm ci --ignore-scripts`, then `node tools/check-compatibility.mjs <major>` from the repository root. Add `--minimum` for minimum-version fixtures.
