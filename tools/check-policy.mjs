@@ -25,12 +25,21 @@ assert.equal(
   policy.build.angular,
 );
 const matrix = [];
+const patchedTools = {
+  piscina: [policy.consumerOverrides['piscina@<5'], policy.consumerOverrides['piscina@>=5']],
+  webpack: [
+    policy.consumerOverrides['webpack@<5.112.0'],
+    policy.consumerOverrides['webpack@>=5.112.0'],
+  ],
+  tar: [policy.consumerOverrides.tar],
+};
 // The declared range includes both the minimum and latest tested version per major.
 for (const row of policy.consumers) {
   for (const minimum of [false, true]) {
     const directory = `compat/angular-${row.major}${minimum ? '-minimum' : ''}`;
     const fixture = await json(`${directory}/package.json`);
     const lock = await json(`${directory}/package-lock.json`);
+    assert.deepEqual(fixture.overrides, policy.consumerOverrides, `${directory}: overrides drift`);
     const angular = minimum ? row.minimum : row.angular;
     const material = minimum ? row.minimum : row.material;
     const expected = {
@@ -73,6 +82,14 @@ for (const row of policy.consumers) {
           version,
           `${directory}: locked ${name}`,
         );
+      }
+    }
+    // Keep patched transitive tools without changing the framework versions under test.
+    for (const [path, dependency] of Object.entries(lock.packages)) {
+      for (const [name, versions] of Object.entries(patchedTools)) {
+        if (path.endsWith(`node_modules/${name}`)) {
+          assert.ok(versions.includes(dependency.version), `${directory}: patched ${name}`);
+        }
       }
     }
     assert.equal((await readFile(join(root, directory, '.nvmrc'), 'utf8')).trim(), row.node);

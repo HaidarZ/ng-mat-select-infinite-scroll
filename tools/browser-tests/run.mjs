@@ -5,9 +5,9 @@
  * counters are defined in compat/template/main.ts. A local HTTP server serves
  * its dist/ directory; Chrome is used locally and Playwright Chromium in CI.
  * Success writes artifacts/browser-<major>[-minimum].json with the tarball hash.
- * Material's active-item reset is recorded separately, not treated as a fixed bug.
+ * Keyboard checks assert the active option, the next Arrow Down step, and selection.
  */
-import { chromium } from '@playwright/test';
+import { chromium, expect } from '@playwright/test';
 import { createServer } from 'node:http';
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { dirname, extname, join, resolve, sep } from 'node:path';
@@ -208,13 +208,38 @@ try {
     assert.equal((await page.getByTestId('selection').textContent()).trim(), '0,1');
     await close();
 
-    // Record Material's active-item behavior separately from selection and paging.
+    // Keep loading paused until the keyboard has reached the old page boundary.
+    // Appending must preserve that item, and Arrow Down must enter the new page.
     await page.goto(url);
+    await control('pause');
     await open();
     await page.keyboard.press('End');
-    const before = await page.locator('mat-select').getAttribute('aria-activedescendant');
+    const select = page.locator('mat-select');
+    const boundaryOption = page.getByRole('option', { name: 'Option 19', exact: true });
+    const before = await boundaryOption.getAttribute('id');
+    assert.ok(before);
+    // Zoneless host bindings render asynchronously after a keyboard event.
+    await expect(select).toHaveAttribute('aria-activedescendant', before);
+    await control('pause');
     await waitCount('count', 40);
-    const after = await page.locator('mat-select').getAttribute('aria-activedescendant');
+    // Let the directive's deferred append check finish after Material's reset.
+    await page.waitForTimeout(50);
+    await expect(select, 'append preserves the active keyboard option').toHaveAttribute(
+      'aria-activedescendant',
+      before,
+    );
+    await expect(boundaryOption).toHaveClass(/mat-mdc-option-active/);
+    const after = await select.getAttribute('aria-activedescendant');
+    assert.equal(await count('selection'), 0, 'restoring the highlight must not select it');
+    await page.keyboard.press('ArrowDown');
+    const nextOption = page.getByRole('option', { name: 'Option 20', exact: true });
+    await expect(select, 'Arrow Down continues into the appended page').toHaveAttribute(
+      'aria-activedescendant',
+      await nextOption.getAttribute('id'),
+    );
+    await expect(nextOption).toHaveClass(/mat-mdc-option-active/);
+    await page.keyboard.press('Enter');
+    await waitCount('selection', 20);
     results.push({
       mode,
       scenarios: [

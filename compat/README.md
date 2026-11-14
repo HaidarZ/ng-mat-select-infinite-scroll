@@ -27,7 +27,11 @@ Run `npm run compat:generate` when changing `compatibility.json`; it overwrites 
 | Geometry | Threshold uses actual panel dimensions, supports percentage/pixel distances and fractional measurements, and rejects invalid/negative values. | #17, #34 |
 | Opening | Check a settled panel even without a scroll event; short lists can request a page, bounded by loading/completion and actual option growth. | #9, #16 |
 | Loading | Optional `loading` suppresses emissions and resumes checks on completion; the consumer owns HTTP, failure/retry, cancellation and cross-select caching. | #49 |
-| Selection | Append preserves the viewport and selected values. Material's [keyboard-navigation limitation](../docs/RECIPES.md#keyboard-navigation) remains. Retain selected options during resets. | #6, #19 |
+| Selection | Append preserves the viewport, active keyboard option, and selected values; Arrow Down continues into the new page. Retain selected options during resets. See [keyboard navigation](../docs/RECIPES.md#keyboard-navigation). | #6, #19 |
 | Imports | Both standalone directive and existing NgModule work; standard MatSelect is covered, MatLegacySelect is a separate integration. | #21, #43, #62 |
 
 Browser results are written under ignored `artifacts/`. The [CI workflow](../.github/workflows/ci.yml) runs the full matrix and checks that every result refers to the same tarball.
+
+Shared `consumerOverrides` in [compatibility.json](../compatibility.json) pin patched Piscina, webpack, and tar versions. They update build tools while keeping the Angular/Material versions under test unchanged. Regenerate manifests and lockfiles together when changing these pins.
+
+Version selectors retain Piscina 4 for older builders and Piscina 5 where required. Webpack 5.111 retains the AMD dependency modules used by older Angular CLI releases; newer builders retain 5.112. These overrides affect development tools, not the published library's runtime dependencies.
