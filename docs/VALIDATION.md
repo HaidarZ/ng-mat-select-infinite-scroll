@@ -29,4 +29,6 @@ The Angular 22 demo passes a production build and browser checks for paging, sea
 
 After publication, fresh installs of `ng-mat-select-infinite-scroll@6.0.0-next.0` from the public npm registry passed production builds and all browser scenarios on Angular **15.2.10**, **19.2.25**, and **22.2.6**. Installed-package resolution/integrity were checked against registry metadata. Both import modes pass; Angular 22 also passes zoneless mode (seven application bootstraps total). These generated consumers do not count as the two required real external-project validations.
 
+The existing, maintainer-owned example repository also passes a production build and two browser tests after an isolated Angular 14 → 15.2 migration. This provides **one of two consumer-project validations**, with its original working tree unchanged. See [the example validation report](releases/6.0.0-next.0.example-validation.md) for migration steps, scope, and the app's bundle-size warning.
+
 The remediated floor builder produces byte-identical package output. Current dependency dispositions are in [DEPENDENCIES.md](DEPENDENCIES.md). Raw local logs/screenshots/receipts are ignored under `artifacts/`; the durable summary is [the validation record](releases/6.0.0-next.0.validation.json).

@@ -130,9 +130,28 @@
         "packageSource": "npm-registry"
       }
     ],
-    "externalProjectValidations": 0,
+    "externalProjectValidations": 1,
     "earliestStableAfter": "2026-11-21T10:40:43.980000Z",
-    "nextAction": "Collect two actual external-project validations; resolve beta feedback; validate a stable artifact and obtain final approval after the minimum beta interval"
+    "nextAction": "Validate a second real consumer project; resolve beta feedback; validate a stable artifact and obtain final approval after the minimum beta interval",
+    "externalProjects": [
+      {
+        "project": "https://github.com/HaidarZ/ng-mat-select-infinite-scroll-example",
+        "sourceCommit": "16ee285a38db5a35e481bdb8a0b17af75213b87a",
+        "classification": "maintainer-owned example, upgraded isolated copy",
+        "validated": true,
+        "baselineAngular": "14.1.3",
+        "angular": "15.2.10",
+        "material": "15.2.9",
+        "library": "6.0.0-next.0",
+        "sourceHash": "8779dbc3851fe3db544e33d706fa6ff00e5ddd53e9fc27cb4979d927417d0545",
+        "productionBuild": true,
+        "browserTestsPassed": 2,
+        "evidence": "docs/releases/6.0.0-next.0.example-validation.md",
+        "originalWorkingTreeChanged": false,
+        "cleanInstallAndRebuild": true,
+        "peerDependencyBypasses": false
+      }
+    ]
   },
   "knownLimitation": "Material active keyboard item can reset after append; separately characterized in browser receipts",
   "scenarios": [
