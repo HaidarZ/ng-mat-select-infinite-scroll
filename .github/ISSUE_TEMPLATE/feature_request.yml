@@ -1,0 +1,15 @@
+name: Feature request
+description: Propose a change with a concrete use case
+body:
+  - type: textarea
+    id: use_case
+    attributes:
+      label: What user problem should this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior and Angular/Material versions
+    validations:
+      required: true

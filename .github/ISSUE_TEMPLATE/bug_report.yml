@@ -1,0 +1,22 @@
+name: Bug report
+description: Report a reproducible select/paging problem
+body:
+  - type: textarea
+    id: behavior
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Angular, Material, library, and browser versions
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction and steps
+      description: Link a runnable reproduction or include the smallest template/data-loading example.
+    validations:
+      required: true

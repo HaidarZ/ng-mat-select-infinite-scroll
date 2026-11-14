@@ -1,13 +1,10 @@
-import {NgModule} from '@angular/core';
-import {MatSelectInfiniteScrollDirective} from './mat-select-infinite-scroll.directive';
-import {MatSelectModule} from '@angular/material/select';
+import { NgModule } from '@angular/core';
+import { MatSelectInfiniteScrollDirective } from './mat-select-infinite-scroll.directive';
+import { MatSelectModule } from '@angular/material/select';
 
+/** NgModule entry point. Standalone applications can import the directive directly. */
 @NgModule({
-    declarations: [MatSelectInfiniteScrollDirective],
-    imports: [
-        MatSelectModule,
-    ],
-    exports: [MatSelectInfiniteScrollDirective]
+  imports: [MatSelectModule, MatSelectInfiniteScrollDirective],
+  exports: [MatSelectInfiniteScrollDirective],
 })
-export class MatSelectInfiniteScrollModule {
-}
+export class MatSelectInfiniteScrollModule {}

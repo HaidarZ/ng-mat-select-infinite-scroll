@@ -1,39 +1,65 @@
-import {Component, OnInit} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {scan} from 'rxjs/operators';
+import { ChangeDetectionStrategy, Component, computed, OnDestroy, signal, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Subscription, timer } from 'rxjs';
+import { MatSelectInfiniteScrollDirective } from 'ng-mat-select-infinite-scroll';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-root', standalone: true, changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [FormsModule, MatFormFieldModule, MatSelectModule, MatProgressBarModule, MatProgressSpinnerModule, MatSelectInfiniteScrollDirective, NgxMatSelectSearchModule],
+  templateUrl: './app.component.html', styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
-  title = 'Angular Material Select Infinite Scroll';
-  total = 100;
-  data = Array.from({length: this.total}).map((_, i) => `Option ${i}`);
-  limit = 10;
-  offset = 0;
-  options = new BehaviorSubject<string[]>([]);
-  options$: Observable<string[]>;
+export class AppComponent implements OnDestroy {
+  private readonly catalog = Array.from({ length: 1000 }, (_, id) => ({ id, name: `Customer ${String(id + 1).padStart(4, '0')}` }));
+  private request?: Subscription;
+  @ViewChild(MatSelect) private matSelect?: MatSelect;
+  readonly inPanelSearch = signal(false);
+  readonly query = signal('');
+  readonly options = signal<Array<{ id: number; name: string }>>([]);
+  readonly selected = signal<number[]>([]);
+  readonly loading = signal(false);
+  readonly error = signal(false);
+  readonly failNext = signal(false);
+  readonly requests = signal(0);
+  readonly filtered = computed(() => this.catalog.filter(item => item.name.toLowerCase().includes(this.query().toLowerCase())));
+  readonly complete = computed(() => this.options().length >= this.filtered().length);
+  readonly retainedSelection = computed(() => this.catalog.filter(item => this.selected().includes(item.id) && !this.options().some(option => option.id === item.id)));
 
-  constructor() {
-    this.options$ = this.options.asObservable().pipe(
-      scan((acc: any[], curr: any[]) => {
-        return [...acc, ...curr];
-      }, [])
-    );
+  constructor() { this.loadNextPage(); }
+
+  search(query: string): void {
+    this.request?.unsubscribe();
+    this.query.set(query);
+    this.options.set([]);
+    this.loading.set(false);
+    this.error.set(false);
+    // A new query starts at the top; appended pages keep their current position.
+    this.matSelect?.panel?.nativeElement.scrollTo({ top: 0 });
+    this.loadNextPage();
   }
 
-  ngOnInit() {
-    this.getNextBatch();
+  changeSearchMode(inPanel: boolean): void {
+    this.inPanelSearch.set(inPanel);
+    this.search('');
   }
 
-  getNextBatch() {
-    setTimeout(() => {
-      const result = this.data.slice(this.offset, this.offset + this.limit);
-      this.options.next(result);
-      this.offset += this.limit;
-    }, 150);
+  loadNextPage(): void {
+    if (this.loading() || this.complete()) return;
+    this.loading.set(true);
+    this.error.set(false);
+    this.requests.update(value => value + 1);
+    const page = this.filtered().slice(this.options().length, this.options().length + 20);
+    // Simulate network latency long enough to see the demo's loading state.
+    this.request = timer(1000).subscribe(() => {
+      if (this.failNext()) { this.failNext.set(false); this.error.set(true); }
+      else this.options.update(options => [...options, ...page]);
+      this.loading.set(false);
+    });
   }
 
+  ngOnDestroy(): void { this.request?.unsubscribe(); }
 }

@@ -1,0 +1,133 @@
+name: Validate library
+
+on:
+  pull_request:
+  push:
+    branches: [master, 'revive/**', 'support/**']
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '18.19.0'
+      - id: matrix
+        run: node tools/check-policy.mjs --matrix
+      - run: npm ci --ignore-scripts --no-audit
+      - run: npm run format:check
+      - run: npm run test:unit
+      - run: npm ci --prefix tools/build-library --ignore-scripts --no-audit
+      - run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: library
+          path: |
+            dist/*.tgz
+            dist/artifact.json
+
+  consumers:
+    needs: package
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.package.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/download-artifact@v4
+        with:
+          name: library
+          path: dist
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm ci --prefix compat/angular-${{ matrix.major }}${{ matrix.minimum && '-minimum' || '' }} --ignore-scripts --no-audit
+      - run: node tools/check-compatibility.mjs ${{ matrix.major }} ${{ matrix.minimum && '--minimum' || '' }}
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24.15.0'
+      - run: npm ci --prefix tools/browser-tests --ignore-scripts --no-audit
+      - run: node tools/browser-tests/node_modules/playwright/cli.js install --with-deps chromium
+      - run: node tools/browser-tests/run.mjs ${{ matrix.major }} ${{ matrix.minimum && '--minimum' || '' }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: receipt-${{ matrix.major }}-${{ matrix.minimum }}
+          path: artifacts/browser-*.json
+
+  demo:
+    needs: package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24.15.0'
+      - uses: actions/download-artifact@v4
+        with:
+          name: library
+          path: dist
+      - run: npm ci --prefix projects/example --ignore-scripts --no-audit
+      - run: npm run build:example
+      - run: npm ci --prefix tools/browser-tests --ignore-scripts --no-audit
+      - run: node tools/browser-tests/node_modules/playwright/cli.js install --with-deps chromium
+      - run: node tools/browser-tests/demo.mjs
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: projects/example/dist/browser
+      - uses: actions/upload-artifact@v4
+        with:
+          name: demo
+          path: |
+            projects/example/dist/browser
+            artifacts/demo.png
+            artifacts/demo-loading.png
+
+  release-gate:
+    needs: [consumers, demo]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24.15.0'
+      - uses: actions/download-artifact@v4
+        with:
+          name: library
+          path: dist
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: receipt-*
+          merge-multiple: true
+          path: artifacts
+      - run: node tools/verify-release.mjs
+
+  pages:
+    needs: [demo, release-gate]
+    # Preview the revival PR now; master publishes after merge.
+    if: >-
+      (github.event_name == 'push' && github.ref == 'refs/heads/master') ||
+      (github.event_name == 'pull_request' && github.head_ref == 'revive/6.0' &&
+       github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@v6
+      - uses: actions/deploy-pages@v5
+        id: deployment
